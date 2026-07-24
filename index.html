@@ -13,65 +13,30 @@ body{
     font-family:Georgia, serif;
 }
 
-header{
-    min-height:100vh;
-    background-image:
-        linear-gradient(rgba(0,0,0,.55), rgba(0,0,0,.25)),
-        url("Hero.jpg");
-    background-size:cover;
-    background-position:center;
-    display:flex;
-    justify-content:center;
-    align-items:flex-start;
-    text-align:left;
-    padding:40px 20px;
-}
-
-h1{
-    font-size:64px;
-    letter-spacing:8px;
-    font-weight:300;
-    margin:0;
-}
-
-p{
-    color:white;
-    font-size:22px;
-    margin-top:-10px;
-    letter-spacing:1px;
-}
-
-.hero{
-    min-height:100vh;
-    background-image:
-        linear-gradient(rgba(0,0,0,.30), rgba(0,0,0,.10)),
-        url("Hero.jpg");
-    background-size:cover;
-    background-position:center;
-    display:flex;
-    justify-content:center;
-    align-items:flex-start;
+.site-header{
+    background:#111;
     text-align:center;
-    padding:80px 20px;
-}
-
- .hero-overlay{
-    width:100%;
+    padding:30px 20px 24px;
 }
 
 .logo{
-    width:min(500px, 70vw);
+    width:min(500px, 75vw);
     height:auto;
     display:block;
     margin:0 auto;
-}   
+}
+
+.tagline{
+    margin:4px 0 0;
+    color:#ddd;
+    font-size:22px;
+    letter-spacing:1px;
+}
+
 .hero img{
     display:block;
     width:100%;
     height:auto;
-    max-height:82vh;
-    object-fit:cover;
-    object-position:center;
 }
 
 footer{
@@ -80,22 +45,25 @@ footer{
     color:#777;
 }
 </style>
-
 </head>
 
 <body>
 
-<header class="hero">
-    <div class="hero-overlay">
-        <img
-            src="ChatGPT Image Jul 24, 2026, 03_06_21 PM.png"
-            alt="The Adore Studio"
-            class="logo"
-        >
-
-        <p>Photography by Theodore Paulson</p>
-    </div>
+<header class="site-header">
+    <img
+        src="ChatGPT Image Jul 24, 2026, 03_06_21 PM.png"
+        alt="The Adore Studio"
+        class="logo"
+    >
+    <p class="tagline">Photography by Theodore Paulson</p>
 </header>
+
+<main class="hero">
+    <img
+        src="Hero.jpg"
+        alt="Surfer walking along the beach at sunset"
+    >
+</main>
 
 <footer>
 © 2026 The Adore Studio
