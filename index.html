@@ -41,10 +41,29 @@ p{
 }
 
 .hero{
-    width:100%;
-    background:#111;
+    min-height:100vh;
+    background-image:
+        linear-gradient(rgba(0,0,0,.55), rgba(0,0,0,.25)),
+        url("Hero.jpg");
+    background-size:cover;
+    background-position:center;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    text-align:center;
+    padding:80px 20px;
 }
 
+ .hero-overlay{
+    width:100%;
+}
+
+.logo{
+    width:min(900px, 92vw);
+    height:auto;
+    display:block;
+    margin:0 auto;
+}   
 .hero img{
     display:block;
     width:100%;
