@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>The Adore Studio</title>
 
 <style>
@@ -14,35 +15,75 @@ body{
 }
 
 .site-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:30px;
+    padding:18px 32px;
     background:#111;
-    text-align:center;
-    padding:30px 20px 24px;
 }
 
 .logo{
-    width:min(500px, 75vw);
+    width:260px;
+    max-width:42vw;
     height:auto;
     display:block;
-    margin:0 auto;
 }
 
-.tagline{
-    margin:4px 0 0;
+nav{
+    display:flex;
+    gap:28px;
+}
+
+nav a{
     color:#ddd;
-    font-size:22px;
+    text-decoration:none;
+    font-size:16px;
     letter-spacing:1px;
 }
 
-.hero img{
+nav a:hover{
+    color:white;
+}
+
+.hero-image{
     display:block;
     width:100%;
     height:auto;
 }
 
+.tagline{
+    margin:0;
+    padding:24px 20px;
+    text-align:center;
+    color:#ddd;
+    font-size:21px;
+    letter-spacing:1px;
+}
+
 footer{
     text-align:center;
-    padding:40px;
+    padding:30px 20px;
     color:#777;
+    font-size:14px;
+}
+
+@media (max-width:700px){
+    .site-header{
+        flex-direction:column;
+        padding:18px 16px;
+    }
+
+    .logo{
+        width:230px;
+        max-width:80vw;
+    }
+
+    nav{
+        gap:18px;
+        flex-wrap:wrap;
+        justify-content:center;
+    }
 }
 </style>
 </head>
@@ -50,19 +91,32 @@ footer{
 <body>
 
 <header class="site-header">
+
     <img
         src="ChatGPT Image Jul 24, 2026, 03_06_21 PM.png"
         alt="The Adore Studio"
         class="logo"
     >
-    <p class="tagline">Photography by Theodore Paulson</p>
+
+    <nav>
+        <a href="#">Gallery</a>
+        <a href="#">Books</a>
+        <a href="#">Prints</a>
+        <a href="#">About</a>
+    </nav>
+
 </header>
 
-<main class="hero">
+<main>
+
     <img
         src="Hero.jpg"
         alt="Surfer walking along the beach at sunset"
+        class="hero-image"
     >
+
+    <p class="tagline">Photography by Theodore Paulson</p>
+
 </main>
 
 <footer>
