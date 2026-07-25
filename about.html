@@ -17,7 +17,7 @@
 }
 
 body{
-    background:#ffffff;
+    background:#fff;
     color:#222;
     font-family:Georgia, serif;
     line-height:1.7;
@@ -29,13 +29,12 @@ header{
     align-items:center;
     padding:22px 60px;
     border-bottom:1px solid #ececec;
-    background:#ffffff;
 }
 
 .logo{
-    display:block;
     width:240px;
     height:auto;
+    display:block;
 }
 
 nav{
@@ -44,8 +43,8 @@ nav{
 }
 
 nav a{
-    color:#666;
     text-decoration:none;
+    color:#666;
     font-size:17px;
     letter-spacing:2px;
     transition:.25s;
@@ -58,18 +57,18 @@ nav a:hover{
 main{
     max-width:900px;
     margin:0 auto;
-    padding:80px 35px 100px;
+    padding:80px 35px 110px;
 }
 
 h1{
-    margin-bottom:50px;
     text-align:center;
     font-size:42px;
     font-weight:normal;
+    margin-bottom:50px;
 }
 
 .bio{
-    max-width:680px;
+    max-width:660px;
     margin:0 auto;
     text-align:center;
     color:#555;
@@ -81,26 +80,24 @@ h1{
 }
 
 .values{
-    margin:55px 0 0;
     text-align:center;
+    margin-top:50px;
 }
 
 .values p{
-    margin:9px 0;
     font-size:29px;
-    font-weight:normal;
+    margin:8px 0;
 }
 
 .brand{
     max-width:620px;
-    margin:120px auto 115px;
+    margin:120px auto 120px;
     text-align:center;
 }
 
 .brand img{
-    display:block;
     width:100%;
-    height:auto;
+    display:block;
     margin:0 auto;
 }
 
@@ -109,97 +106,81 @@ h1{
 }
 
 .contact h2{
-    margin-bottom:30px;
-    font-size:34px;
+    font-size:30px;
     font-weight:normal;
+    letter-spacing:3px;
+    margin-bottom:35px;
 }
 
 .contact p{
-    margin:9px 0;
-    font-size:20px;
+    font-size:19px;
+    color:#555;
+    margin:12px 0;
 }
 
 .contact a{
-    color:#1d5f97;
+    color:#555;
     text-decoration:none;
 }
 
 .contact a:hover{
-    text-decoration:underline;
+    color:#1d5f97;
 }
 
 footer{
-    padding:45px 20px;
-    border-top:1px solid #ececec;
     text-align:center;
+    padding:45px;
+    border-top:1px solid #ececec;
     color:#999;
     font-size:15px;
 }
 
 @media(max-width:800px){
 
-    header{
-        flex-direction:column;
-        gap:25px;
-        padding:25px;
-    }
-
-    .logo{
-        width:220px;
-    }
-
-    nav{
-        justify-content:center;
-        flex-wrap:wrap;
-        gap:20px;
-    }
-
-    main{
-        padding:50px 20px 80px;
-    }
-
-    h1{
-        font-size:36px;
-    }
-
-    .bio{
-        font-size:18px;
-    }
-
-    .values p{
-        font-size:24px;
-    }
-
-    .brand{
-        width:100%;
-        max-width:500px;
-        margin:90px auto;
-    }
-
+header{
+    flex-direction:column;
+    gap:25px;
+    padding:25px;
 }
 
-@media(max-width:480px){
+.logo{
+    width:220px;
+}
 
-    nav{
-        gap:15px;
-    }
+nav{
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:20px;
+}
 
-    nav a{
-        font-size:15px;
-        letter-spacing:1px;
-    }
+main{
+    padding:50px 20px 80px;
+}
 
-    .brand{
-        max-width:360px;
-    }
+h1{
+    font-size:36px;
+}
 
-    .contact h2{
-        font-size:30px;
-    }
+.bio{
+    font-size:18px;
+}
 
-    .contact p{
-        font-size:18px;
-    }
+.values p{
+    font-size:24px;
+}
+
+.brand{
+    max-width:460px;
+    margin:90px auto;
+}
+
+.contact h2{
+    font-size:26px;
+}
+
+.contact p{
+    font-size:18px;
+}
 
 }
 
@@ -212,17 +193,19 @@ footer{
 <header>
 
 <a href="index.html">
-    <img src="oglogo.png"
-         class="logo"
-         alt="The Adore Studio">
+<img src="oglogo.png"
+class="logo"
+alt="The Adore Studio">
 </a>
 
 <nav>
-    <a href="index.html">Home</a>
-    <a href="gallery.html">Gallery</a>
-    <a href="books.html">Books</a>
-    <a href="#">Prints</a>
-    <a href="about.html">About</a>
+
+<a href="index.html">Home</a>
+<a href="gallery.html">Gallery</a>
+<a href="books.html">Books</a>
+<a href="#">Prints</a>
+<a href="about.html">About</a>
+
 </nav>
 
 </header>
@@ -233,67 +216,57 @@ footer{
 
 <div class="bio">
 
-    <p>
-        Theodore Paulson is the proud father of three children.
-    </p>
+<p>Theodore Paulson is the proud father of three children.</p>
 
-    <p>
-        The greatest lessons in his life were learned alongside them.
-    </p>
+<p>The greatest lessons in his life were learned alongside them.</p>
 
-    <p>
-        Those lessons became the values that also guide his photography.
-    </p>
+<p>Those lessons became the values that also guide his photography.</p>
 
 </div>
 
 <div class="values">
 
-    <p>Be Present.</p>
-
-    <p>Be Curious.</p>
-
-    <p>Be Adaptable.</p>
-
-    <p>Be Courageous.</p>
-
-    <p>Be Grateful.</p>
+<p>Be Present.</p>
+<p>Be Curious.</p>
+<p>Be Adaptable.</p>
+<p>Be Courageous.</p>
+<p>Be Grateful.</p>
 
 </div>
 
 <div class="brand">
 
-    <img src="adore-logo-tagline.png"
-         alt="The Adore Studio — Experience. Craft. Presentation.">
+<img src="about-logo.png"
+alt="The Adore Studio">
 
 </div>
 
 <div class="contact">
 
-    <h2>Contact</h2>
+<h2>CONTACT</h2>
 
-    <p>The Adore Studio</p>
+<p>
+<a href="mailto:adore@theadore.studio">
+adore@theadore.studio
+</a>
+</p>
 
-    <p>Seaside, Oregon</p>
+<p>
+<a href="https://theadore.studio">
+theadore.studio
+</a>
+</p>
 
-    <p>
-        <a href="mailto:adore@theadore.studio">
-            adore@theadore.studio
-        </a>
-    </p>
-
-    <p>
-        <a href="https://theadore.studio">
-            theadore.studio
-        </a>
-    </p>
+<p>Seaside, Oregon</p>
 
 </div>
 
 </main>
 
 <footer>
-    © 2026 The Adore Studio
+
+© 2026 The Adore Studio
+
 </footer>
 
 </body>
