@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,14 +8,19 @@
 
 <style>
 *{
+    margin:0;
+    padding:0;
     box-sizing:border-box;
 }
 
 body{
-    margin:0;
     background:#ffffff;
     color:#333;
     font-family:Georgia, serif;
+}
+
+body.lightbox-open{
+    overflow:hidden;
 }
 
 header{
@@ -26,11 +30,13 @@ header{
     gap:30px;
     padding:22px 50px;
     border-bottom:1px solid #e6e6e6;
+    background:#ffffff;
 }
 
 .logo{
     width:230px;
     height:auto;
+    display:block;
 }
 
 nav{
@@ -73,6 +79,75 @@ h1{
     height:auto;
     margin:0 0 22px;
     break-inside:avoid;
+    cursor:pointer;
+    transition:opacity .2s ease;
+}
+
+.gallery img:hover{
+    opacity:.88;
+}
+
+.lightbox{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    background:rgba(0,0,0,.94);
+    align-items:center;
+    justify-content:center;
+    padding:35px 75px;
+}
+
+.lightbox.active{
+    display:flex;
+}
+
+.lightbox-image{
+    display:block;
+    max-width:94vw;
+    max-height:90vh;
+    width:auto;
+    height:auto;
+    object-fit:contain;
+    box-shadow:0 0 30px rgba(0,0,0,.45);
+}
+
+.lightbox-close,
+.lightbox-arrow{
+    position:absolute;
+    border:0;
+    background:transparent;
+    color:#ffffff;
+    font-family:Arial, sans-serif;
+    cursor:pointer;
+    line-height:1;
+    opacity:.9;
+}
+
+.lightbox-close:hover,
+.lightbox-arrow:hover{
+    opacity:.65;
+}
+
+.lightbox-close{
+    top:18px;
+    right:28px;
+    font-size:46px;
+}
+
+.lightbox-arrow{
+    top:50%;
+    transform:translateY(-50%);
+    font-size:58px;
+    padding:18px;
+}
+
+.lightbox-prev{
+    left:10px;
+}
+
+.lightbox-next{
+    right:10px;
 }
 
 footer{
@@ -105,6 +180,21 @@ footer{
     h1{
         font-size:36px;
     }
+
+    .lightbox{
+        padding:55px 15px 25px;
+    }
+
+    .lightbox-arrow{
+        font-size:44px;
+        padding:10px;
+    }
+
+    .lightbox-close{
+        top:12px;
+        right:18px;
+        font-size:42px;
+    }
 }
 </style>
 </head>
@@ -112,27 +202,23 @@ footer{
 <body>
 
 <header>
+    <a href="index.html">
+        <img src="oglogo.png" alt="The Adore Studio" class="logo">
+    </a>
 
-<a href="index.html">
-    <img src="oglogo.png" alt="The Adore Studio" class="logo">
-</a>
-
-<nav>
-    <a href="index.html">Home</a>
-    <a href="gallery.html">Gallery</a>
-    <a href="books.html">Books</a>
-    <a href="#">Prints</a>
-    <a href="#">About</a>
-</nav>
-
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="books.html">Books</a>
+        <a href="#">Prints</a>
+        <a href="#">About</a>
+    </nav>
 </header>
 
 <main>
+    <h1>Gallery</h1>
 
-<h1>Gallery</h1>
-
-<div class="gallery">
-
+    <div class="gallery">
     <img src="Gallery001.jpg" alt="Fine art photograph by Theodore Paulson">
     <img src="Gallery002.jpg" alt="Fine art photograph by Theodore Paulson">
     <img src="Gallery003.jpg" alt="Fine art photograph by Theodore Paulson">
@@ -241,14 +327,80 @@ footer{
     <img src="Gallery106.jpg" alt="Fine art photograph by Theodore Paulson">
     <img src="Gallery107.jpg" alt="Fine art photograph by Theodore Paulson">
     <img src="Gallery108.jpg" alt="Fine art photograph by Theodore Paulson">
-
-</div>
-
+    </div>
 </main>
 
 <footer>
-© 2026 The Adore Studio
+    © 2026 The Adore Studio
 </footer>
+
+<div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Close">&times;</button>
+    <button class="lightbox-arrow lightbox-prev" id="lightboxPrev" aria-label="Previous image">&#10094;</button>
+    <img class="lightbox-image" id="lightboxImage" src="" alt="">
+    <button class="lightbox-arrow lightbox-next" id="lightboxNext" aria-label="Next image">&#10095;</button>
+</div>
+
+<script>
+const galleryImages = Array.from(document.querySelectorAll('.gallery img'));
+const lightbox = document.getElementById('lightbox');
+const lightboxImage = document.getElementById('lightboxImage');
+const lightboxClose = document.getElementById('lightboxClose');
+const lightboxPrev = document.getElementById('lightboxPrev');
+const lightboxNext = document.getElementById('lightboxNext');
+
+let currentIndex = 0;
+
+function showImage(index) {
+    currentIndex = (index + galleryImages.length) % galleryImages.length;
+    const selectedImage = galleryImages[currentIndex];
+
+    lightboxImage.src = selectedImage.src;
+    lightboxImage.alt = selectedImage.alt;
+}
+
+function openLightbox(index) {
+    showImage(index);
+    lightbox.classList.add('active');
+    lightbox.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('lightbox-open');
+}
+
+function closeLightbox() {
+    lightbox.classList.remove('active');
+    lightbox.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('lightbox-open');
+    lightboxImage.src = '';
+}
+
+galleryImages.forEach((image, index) => {
+    image.addEventListener('click', () => openLightbox(index));
+});
+
+lightboxClose.addEventListener('click', closeLightbox);
+lightboxPrev.addEventListener('click', event => {
+    event.stopPropagation();
+    showImage(currentIndex - 1);
+});
+lightboxNext.addEventListener('click', event => {
+    event.stopPropagation();
+    showImage(currentIndex + 1);
+});
+
+lightbox.addEventListener('click', event => {
+    if (event.target === lightbox) {
+        closeLightbox();
+    }
+});
+
+document.addEventListener('keydown', event => {
+    if (!lightbox.classList.contains('active')) return;
+
+    if (event.key === 'Escape') closeLightbox();
+    if (event.key === 'ArrowLeft') showImage(currentIndex - 1);
+    if (event.key === 'ArrowRight') showImage(currentIndex + 1);
+});
+</script>
 
 </body>
 </html>
