@@ -20,7 +20,7 @@ body{
     background:#ffffff;
     color:#222;
     font-family:Georgia, serif;
-    line-height:1.8;
+    line-height:1.7;
 }
 
 header{
@@ -29,12 +29,13 @@ header{
     align-items:center;
     padding:22px 60px;
     border-bottom:1px solid #ececec;
+    background:#ffffff;
 }
 
 .logo{
+    display:block;
     width:240px;
     height:auto;
-    display:block;
 }
 
 nav{
@@ -43,10 +44,10 @@ nav{
 }
 
 nav a{
-    text-decoration:none;
     color:#666;
-    letter-spacing:2px;
+    text-decoration:none;
     font-size:17px;
+    letter-spacing:2px;
     transition:.25s;
 }
 
@@ -61,18 +62,18 @@ main{
 }
 
 h1{
+    margin-bottom:50px;
     text-align:center;
     font-size:42px;
     font-weight:normal;
-    margin-bottom:50px;
 }
 
 .bio{
     max-width:680px;
     margin:0 auto;
     text-align:center;
-    font-size:20px;
     color:#555;
+    font-size:20px;
 }
 
 .bio p{
@@ -80,39 +81,27 @@ h1{
 }
 
 .values{
-    text-align:center;
     margin:55px 0 0;
+    text-align:center;
 }
 
 .values p{
-    font-size:30px;
-    font-weight:500;
-    margin:10px 0;
+    margin:9px 0;
+    font-size:29px;
+    font-weight:normal;
 }
 
 .brand{
-    width:360px;
-    max-width:92%;
-    margin:125px auto 115px;
+    max-width:620px;
+    margin:120px auto 115px;
     text-align:center;
 }
 
 .brand img{
-    width:100%;
     display:block;
-    margin:0 auto 4px;
-}
-
-.tagline{
     width:100%;
-    margin-top:0;
-    text-align:center;
-    font-family:Georgia, serif;
-    font-size:18px;
-    font-weight:400;
-    letter-spacing:2px;
-    color:#5f5f5f;
-    white-space:nowrap;
+    height:auto;
+    margin:0 auto;
 }
 
 .contact{
@@ -120,14 +109,14 @@ h1{
 }
 
 .contact h2{
+    margin-bottom:30px;
     font-size:34px;
     font-weight:normal;
-    margin-bottom:30px;
 }
 
 .contact p{
+    margin:9px 0;
     font-size:20px;
-    margin:10px 0;
 }
 
 .contact a{
@@ -140,9 +129,9 @@ h1{
 }
 
 footer{
-    text-align:center;
-    padding:45px;
+    padding:45px 20px;
     border-top:1px solid #ececec;
+    text-align:center;
     color:#999;
     font-size:15px;
 }
@@ -182,25 +171,34 @@ footer{
     }
 
     .brand{
-        width:300px;
-    }
-
-    .tagline{
-        font-size:15px;
-        letter-spacing:1.5px;
+        width:100%;
+        max-width:500px;
+        margin:90px auto;
     }
 
 }
 
-@media(max-width:420px){
+@media(max-width:480px){
 
-    .brand{
-        width:280px;
+    nav{
+        gap:15px;
     }
 
-    .tagline{
-        font-size:13px;
+    nav a{
+        font-size:15px;
         letter-spacing:1px;
+    }
+
+    .brand{
+        max-width:360px;
+    }
+
+    .contact h2{
+        font-size:30px;
+    }
+
+    .contact p{
+        font-size:18px;
     }
 
 }
@@ -214,7 +212,9 @@ footer{
 <header>
 
 <a href="index.html">
-    <img src="oglogo.png" class="logo" alt="The Adore Studio">
+    <img src="oglogo.png"
+         class="logo"
+         alt="The Adore Studio">
 </a>
 
 <nav>
@@ -233,11 +233,17 @@ footer{
 
 <div class="bio">
 
-    <p>Theodore Paulson is the proud father of three children.</p>
+    <p>
+        Theodore Paulson is the proud father of three children.
+    </p>
 
-    <p>The greatest lessons in his life were learned alongside them.</p>
+    <p>
+        The greatest lessons in his life were learned alongside them.
+    </p>
 
-    <p>Those lessons became the values that also guide his photography.</p>
+    <p>
+        Those lessons became the values that also guide his photography.
+    </p>
 
 </div>
 
@@ -257,11 +263,8 @@ footer{
 
 <div class="brand">
 
-    <img src="oglogo.png" alt="The Adore Studio">
-
-    <div class="tagline">
-        Experience. Craft. Presentation.
-    </div>
+    <img src="adore-logo-tagline.png"
+         alt="The Adore Studio — Experience. Craft. Presentation.">
 
 </div>
 
@@ -294,4 +297,5 @@ footer{
 </footer>
 
 </body>
+
 </html>
