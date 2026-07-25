@@ -66,16 +66,87 @@ footer{
     border-top:1px solid #ececec;
     font-size:15px;
 }
+    
+.gallery img{
+    cursor:pointer;
+}
 
+.lightbox{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.92);
+    z-index:9999;
+    align-items:center;
+    justify-content:center;
+    padding:30px;
+}
+
+.lightbox.active{
+    display:flex;
+}
+
+.lightbox img{
+    max-width:95vw;
+    max-height:90vh;
+    width:auto;
+    height:auto;
+    box-shadow:0 0 30px rgba(0,0,0,.5);
+}
+
+.lightbox-close{
+    position:absolute;
+    top:18px;
+    right:28px;
+    color:white;
+    font-size:42px;
+    cursor:pointer;
+    line-height:1;
+}
+    
 </style>
 
 </head>
 
-<body>
+<div class="lightbox" id="lightbox">
+    <span class="lightbox-close" id="lightboxClose">&times;</span>
+    <img id="lightboxImage" src="" alt="">
+</div>
+    <script>
+const galleryImages = document.querySelectorAll('.gallery img');
+const lightbox = document.getElementById('lightbox');
+const lightboxImage = document.getElementById('lightboxImage');
+const lightboxClose = document.getElementById('lightboxClose');
 
+galleryImages.forEach(image => {
+    image.addEventListener('click', () => {
+        lightboxImage.src = image.src;
+        lightboxImage.alt = image.alt;
+        lightbox.classList.add('active');
+    });
+});
+
+lightboxClose.addEventListener('click', () => {
+    lightbox.classList.remove('active');
+});
+
+lightbox.addEventListener('click', event => {
+    if (event.target === lightbox) {
+        lightbox.classList.remove('active');
+    }
+});
+
+document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') {
+        lightbox.classList.remove('active');
+    }
+});
+</script>
+<body>
+    
 <header>
 
-<img src="oglogo.png"
+    <img src="oglogo.png"
      alt="The Adore Studio"
      class="logo">
 
