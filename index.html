@@ -7,120 +7,106 @@
 <title>The Adore Studio</title>
 
 <style>
-body{
+
+*{
     margin:0;
-    background:#111;
-    color:white;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#ffffff;
+    color:#222;
     font-family:Georgia, serif;
 }
 
-.site-header{
+header{
+    background:#ffffff;
     display:flex;
-    align-items:center;
     justify-content:space-between;
-    gap:30px;
-    padding:18px 32px;
-    background:#111;
+    align-items:center;
+    padding:22px 60px;
+    border-bottom:1px solid #ececec;
 }
 
 .logo{
-    width:260px;
-    max-width:42vw;
+    width:240px;
     height:auto;
-    display:block;
-}
-
-nav{
-    display:flex;
-    gap:28px;
 }
 
 nav a{
-    color:#ddd;
     text-decoration:none;
-    font-size:16px;
-    letter-spacing:1px;
+    color:#6f6f6f;
+    margin-left:40px;
+    font-size:17px;
+    letter-spacing:2px;
+    transition:.25s;
 }
 
 nav a:hover{
-    color:white;
+    color:#1d5f97;
 }
 
-.hero-image{
-    display:block;
+.hero img{
     width:100%;
-    height:auto;
+    display:block;
 }
 
-.tagline{
-    margin:0;
-    padding:24px 20px;
+.caption{
     text-align:center;
-    color:#ddd;
-    font-size:21px;
-    letter-spacing:1px;
+    padding:28px;
+    font-size:24px;
+    color:#666;
 }
 
 footer{
     text-align:center;
-    padding:30px 20px;
-    color:#777;
-    font-size:14px;
+    padding:50px;
+    color:#999;
+    border-top:1px solid #ececec;
+    font-size:15px;
 }
 
-@media (max-width:700px){
-    .site-header{
-        flex-direction:column;
-        padding:18px 16px;
-    }
-
-    .logo{
-        width:230px;
-        max-width:80vw;
-    }
-
-    nav{
-        gap:18px;
-        flex-wrap:wrap;
-        justify-content:center;
-    }
-}
 </style>
+
 </head>
 
 <body>
 
-<header class="site-header">
+<header>
 
-    <img
-        src="ChatGPT Image Jul 24, 2026, 03_06_21 PM.png"
-        alt="The Adore Studio"
-        class="logo"
-    >
+<img src="oglogo.png"
+     alt="The Adore Studio"
+     class="logo">
 
-    <nav>
-        <a href="#">Gallery</a>
-        <a href="#">Books</a>
-        <a href="#">Prints</a>
-        <a href="#">About</a>
-    </nav>
+<nav>
+
+<a href="#">Gallery</a>
+<a href="#">Books</a>
+<a href="#">Prints</a>
+<a href="#">About</a>
+
+</nav>
 
 </header>
 
-<main>
+<section class="hero">
 
-    <img
-        src="Hero.jpg"
-        alt="Surfer walking along the beach at sunset"
-        class="hero-image"
-    >
+<img src="homepage.jpg"
+     alt="The Adore Studio">
 
-    <p class="tagline">Photography by Theodore Paulson</p>
+</section>
 
-</main>
+<div class="caption">
+
+Photography by Theodore Paulson
+
+</div>
 
 <footer>
+
 © 2026 The Adore Studio
+
 </footer>
 
 </body>
