@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -21,23 +23,28 @@ body{
 }
 
 header{
-    background:#ffffff;
     display:flex;
     justify-content:space-between;
     align-items:center;
     padding:22px 60px;
     border-bottom:1px solid #ececec;
+    background:#fff;
 }
 
 .logo{
     width:240px;
     height:auto;
+    display:block;
+}
+
+nav{
+    display:flex;
+    gap:40px;
 }
 
 nav a{
     text-decoration:none;
-    color:#6f6f6f;
-    margin-left:40px;
+    color:#666;
     font-size:17px;
     letter-spacing:2px;
     transition:.25s;
@@ -47,6 +54,10 @@ nav a:hover{
     color:#1d5f97;
 }
 
+.hero{
+    width:100%;
+}
+
 .hero img{
     width:100%;
     display:block;
@@ -54,104 +65,74 @@ nav a:hover{
 
 .caption{
     text-align:center;
-    padding:28px;
-    font-size:24px;
-    color:#666;
+    padding:30px;
+}
+
+.caption h2{
+    font-size:30px;
+    font-weight:normal;
+    margin-bottom:10px;
+}
+
+.caption p{
+    color:#777;
+    font-size:18px;
+    line-height:1.6;
 }
 
 footer{
     text-align:center;
-    padding:50px;
+    padding:45px;
     color:#999;
     border-top:1px solid #ececec;
     font-size:15px;
 }
-    
-.gallery img{
-    cursor:pointer;
+
+@media(max-width:900px){
+
+header{
+    flex-direction:column;
+    gap:25px;
+    padding:25px;
 }
 
-.lightbox{
-    display:none;
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.92);
-    z-index:9999;
-    align-items:center;
+nav{
+    flex-wrap:wrap;
     justify-content:center;
-    padding:30px;
+    gap:22px;
 }
 
-.lightbox.active{
-    display:flex;
+.logo{
+    width:220px;
 }
 
-.lightbox img{
-    max-width:95vw;
-    max-height:90vh;
-    width:auto;
-    height:auto;
-    box-shadow:0 0 30px rgba(0,0,0,.5);
+.caption{
+    padding:24px;
 }
 
-.lightbox-close{
-    position:absolute;
-    top:18px;
-    right:28px;
-    color:white;
-    font-size:42px;
-    cursor:pointer;
-    line-height:1;
+.caption h2{
+    font-size:24px;
 }
-    
+
+}
+
 </style>
 
 </head>
 
-<div class="lightbox" id="lightbox">
-    <span class="lightbox-close" id="lightboxClose">&times;</span>
-    <img id="lightboxImage" src="" alt="">
-</div>
-    <script>
-const galleryImages = document.querySelectorAll('.gallery img');
-const lightbox = document.getElementById('lightbox');
-const lightboxImage = document.getElementById('lightboxImage');
-const lightboxClose = document.getElementById('lightboxClose');
-
-galleryImages.forEach(image => {
-    image.addEventListener('click', () => {
-        lightboxImage.src = image.src;
-        lightboxImage.alt = image.alt;
-        lightbox.classList.add('active');
-    });
-});
-
-lightboxClose.addEventListener('click', () => {
-    lightbox.classList.remove('active');
-});
-
-lightbox.addEventListener('click', event => {
-    if (event.target === lightbox) {
-        lightbox.classList.remove('active');
-    }
-});
-
-document.addEventListener('keydown', event => {
-    if (event.key === 'Escape') {
-        lightbox.classList.remove('active');
-    }
-});
-</script>
 <body>
-    
+
 <header>
 
+<a href="index.html">
     <img src="oglogo.png"
-     alt="The Adore Studio"
-     class="logo">
+         alt="The Adore Studio"
+         class="logo">
+</a>
 
 <nav>
 
+<a href="index.html">Home</a>
 <a href="gallery.html">Gallery</a>
 <a href="books.html">Books</a>
 <a href="#">Prints</a>
@@ -168,11 +149,16 @@ document.addEventListener('keydown', event => {
 
 </section>
 
-<div class="caption">
+<section class="caption">
 
-Photography by Theodore Paulson
+<h2>The Adore Studio</h2>
 
-</div>
+<p>
+Fine art photography by Theodore Paulson.<br>
+Studies in Light, Perspective, and Relief along Oregon's North Coast.
+</p>
+
+</section>
 
 <footer>
 
@@ -181,4 +167,5 @@ Photography by Theodore Paulson
 </footer>
 
 </body>
+
 </html>
