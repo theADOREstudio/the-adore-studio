@@ -48,4 +48,563 @@ nav{
 }
 
 nav a{
-   
+    color:#666;
+    text-decoration:none;
+    font-size:16px;
+    letter-spacing:1px;
+    transition:color .2s ease;
+}
+
+nav a:hover{
+    color:#1d5f97;
+}
+
+main{
+    max-width:1560px;
+    margin:0 auto;
+    padding:58px 34px 85px;
+}
+
+.gallery-heading{
+    margin-bottom:58px;
+    text-align:center;
+}
+
+h1{
+    margin-bottom:12px;
+    font-size:46px;
+    font-weight:normal;
+}
+
+.gallery-subtitle{
+    color:#777;
+    font-size:18px;
+    line-height:1.6;
+}
+
+/*
+The grid displays photographs in the exact order
+listed in gallery.js: left to right, then downward.
+*/
+
+.gallery{
+    display:grid;
+    grid-template-columns:repeat(3, minmax(0, 1fr));
+    gap:30px;
+    align-items:start;
+}
+
+.gallery-item{
+    width:100%;
+}
+
+.gallery-item img{
+    display:block;
+    width:100%;
+    height:auto;
+    cursor:pointer;
+    background:#f3f3f1;
+    box-shadow:0 3px 14px rgba(0,0,0,.06);
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
+}
+
+.gallery-item img:hover{
+    transform:translateY(-4px);
+    box-shadow:0 12px 28px rgba(0,0,0,.13);
+}
+
+.gallery-error{
+    grid-column:1 / -1;
+    padding:50px 20px;
+    text-align:center;
+    color:#777;
+    font-size:18px;
+}
+
+/* LIGHTBOX */
+
+.lightbox{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    padding:34px 90px;
+    background:#f7f7f4;
+    align-items:center;
+    justify-content:center;
+}
+
+.lightbox.active{
+    display:flex;
+}
+
+.lightbox-content{
+    width:100%;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+}
+
+.lightbox-frame{
+    display:flex;
+    max-width:92vw;
+    max-height:78vh;
+    padding:18px;
+    background:#ffffff;
+    box-shadow:0 18px 48px rgba(0,0,0,.16);
+    align-items:center;
+    justify-content:center;
+}
+
+.lightbox-image{
+    display:block;
+    width:auto;
+    height:auto;
+    max-width:86vw;
+    max-height:72vh;
+    object-fit:contain;
+}
+
+.lightbox-caption{
+    margin-top:22px;
+    color:#555;
+    text-align:center;
+}
+
+.lightbox-title{
+    margin-bottom:5px;
+    font-size:20px;
+}
+
+.lightbox-studio{
+    color:#888;
+    font-size:15px;
+    letter-spacing:1.6px;
+    text-transform:uppercase;
+}
+
+.lightbox-close,
+.lightbox-arrow{
+    position:absolute;
+    border:0;
+    background:transparent;
+    color:#444;
+    font-family:Arial, sans-serif;
+    cursor:pointer;
+    line-height:1;
+    opacity:.78;
+    transition:
+        opacity .2s ease,
+        transform .2s ease;
+}
+
+.lightbox-close:hover,
+.lightbox-arrow:hover{
+    opacity:1;
+}
+
+.lightbox-close{
+    top:18px;
+    right:28px;
+    font-size:46px;
+}
+
+.lightbox-arrow{
+    top:50%;
+    padding:18px;
+    font-size:56px;
+    transform:translateY(-50%);
+}
+
+.lightbox-arrow:hover{
+    transform:translateY(-50%) scale(1.06);
+}
+
+.lightbox-prev{
+    left:12px;
+}
+
+.lightbox-next{
+    right:12px;
+}
+
+footer{
+    padding:38px 20px;
+    border-top:1px solid #e6e6e6;
+    color:#999;
+    text-align:center;
+}
+
+@media(max-width:900px){
+
+    header{
+        flex-direction:column;
+        padding:22px;
+    }
+
+    nav{
+        justify-content:center;
+        flex-wrap:wrap;
+        gap:20px;
+    }
+
+    main{
+        padding:42px 20px 65px;
+    }
+
+    .gallery-heading{
+        margin-bottom:42px;
+    }
+
+    .gallery{
+        grid-template-columns:repeat(2, minmax(0, 1fr));
+        gap:22px;
+    }
+
+    .lightbox{
+        padding:58px 52px 30px;
+    }
+
+}
+
+@media(max-width:600px){
+
+    .logo{
+        width:220px;
+    }
+
+    h1{
+        font-size:36px;
+    }
+
+    .gallery-subtitle{
+        font-size:16px;
+    }
+
+    .gallery{
+        grid-template-columns:1fr;
+        gap:22px;
+    }
+
+    .lightbox{
+        padding:58px 12px 24px;
+    }
+
+    .lightbox-frame{
+        max-width:94vw;
+        padding:8px;
+    }
+
+    .lightbox-image{
+        max-width:90vw;
+        max-height:66vh;
+    }
+
+    .lightbox-arrow{
+        top:auto;
+        bottom:18px;
+        padding:8px 14px;
+        font-size:42px;
+        transform:none;
+    }
+
+    .lightbox-arrow:hover{
+        transform:scale(1.06);
+    }
+
+    .lightbox-prev{
+        left:18px;
+    }
+
+    .lightbox-next{
+        right:18px;
+    }
+
+    .lightbox-close{
+        top:10px;
+        right:16px;
+        font-size:42px;
+    }
+
+    .lightbox-caption{
+        margin-top:16px;
+        padding-bottom:42px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<a href="index.html">
+    <img
+        src="oglogo.png"
+        alt="The Adore Studio"
+        class="logo">
+</a>
+
+<nav>
+    <a href="index.html">Gallery</a>
+    <a href="books.html">Books</a>
+    <a href="prints.html">Prints</a>
+    <a href="about.html">About</a>
+</nav>
+
+</header>
+
+<main>
+
+<div class="gallery-heading">
+
+    <h1>Gallery</h1>
+
+    <p class="gallery-subtitle">
+        A curated collection exploring Oregon's North Coast.
+    </p>
+
+</div>
+
+<div class="gallery" id="gallery"></div>
+
+</main>
+
+<footer>
+    © 2026 The Adore Studio
+</footer>
+
+<div class="lightbox" id="lightbox" aria-hidden="true">
+
+    <button
+        class="lightbox-close"
+        id="lightboxClose"
+        aria-label="Close">
+        &times;
+    </button>
+
+    <button
+        class="lightbox-arrow lightbox-prev"
+        id="lightboxPrev"
+        aria-label="Previous image">
+        &#10094;
+    </button>
+
+    <div class="lightbox-content">
+
+        <div class="lightbox-frame">
+
+            <img
+                class="lightbox-image"
+                id="lightboxImage"
+                src=""
+                alt="">
+
+        </div>
+
+        <div class="lightbox-caption">
+
+            <div
+                class="lightbox-title"
+                id="lightboxTitle">
+            </div>
+
+            <div class="lightbox-studio">
+                The Adore Studio
+            </div>
+
+        </div>
+
+    </div>
+
+    <button
+        class="lightbox-arrow lightbox-next"
+        id="lightboxNext"
+        aria-label="Next image">
+        &#10095;
+    </button>
+
+</div>
+
+<!-- gallery.js must be in the same GitHub folder as index.html -->
+<script src="gallery.js?v=20"></script>
+
+<script>
+
+const gallery = document.getElementById('gallery');
+const lightbox = document.getElementById('lightbox');
+const lightboxImage = document.getElementById('lightboxImage');
+const lightboxTitle = document.getElementById('lightboxTitle');
+const lightboxClose = document.getElementById('lightboxClose');
+const lightboxPrev = document.getElementById('lightboxPrev');
+const lightboxNext = document.getElementById('lightboxNext');
+
+let currentIndex = 0;
+
+if(typeof galleryOrder === 'undefined'){
+
+    gallery.innerHTML = `
+        <p class="gallery-error">
+            The gallery could not load. Confirm that gallery.js is
+            in the same folder as index.html.
+        </p>
+    `;
+
+}else{
+
+    galleryOrder.forEach((item, index) => {
+
+        const galleryItem = document.createElement('div');
+        const image = document.createElement('img');
+
+        galleryItem.className = 'gallery-item';
+
+        image.src = item.image;
+
+        image.alt =
+            item.title ||
+            'Fine art photograph by Theodore Paulson';
+
+        image.loading =
+            index < 9 ? 'eager' : 'lazy';
+
+        image.addEventListener(
+            'click',
+            () => openLightbox(index)
+        );
+
+        galleryItem.appendChild(image);
+        gallery.appendChild(galleryItem);
+
+    });
+
+}
+
+function showImage(index){
+
+    currentIndex =
+        (index + galleryOrder.length) %
+        galleryOrder.length;
+
+    const selectedImage =
+        galleryOrder[currentIndex];
+
+    lightboxImage.src =
+        selectedImage.image;
+
+    lightboxImage.alt =
+        selectedImage.title ||
+        'Fine art photograph by Theodore Paulson';
+
+    lightboxTitle.textContent =
+        selectedImage.title || '';
+
+}
+
+function openLightbox(index){
+
+    showImage(index);
+
+    lightbox.classList.add('active');
+
+    lightbox.setAttribute(
+        'aria-hidden',
+        'false'
+    );
+
+    document.body.classList.add(
+        'lightbox-open'
+    );
+
+}
+
+function closeLightbox(){
+
+    lightbox.classList.remove('active');
+
+    lightbox.setAttribute(
+        'aria-hidden',
+        'true'
+    );
+
+    document.body.classList.remove(
+        'lightbox-open'
+    );
+
+    lightboxImage.src = '';
+
+}
+
+lightboxClose.addEventListener(
+    'click',
+    closeLightbox
+);
+
+lightboxPrev.addEventListener(
+    'click',
+    event => {
+
+        event.stopPropagation();
+        showImage(currentIndex - 1);
+
+    }
+);
+
+lightboxNext.addEventListener(
+    'click',
+    event => {
+
+        event.stopPropagation();
+        showImage(currentIndex + 1);
+
+    }
+);
+
+lightbox.addEventListener(
+    'click',
+    event => {
+
+        if(event.target === lightbox){
+            closeLightbox();
+        }
+
+    }
+);
+
+document.addEventListener(
+    'keydown',
+    event => {
+
+        if(
+            !lightbox.classList.contains('active')
+        ){
+            return;
+        }
+
+        if(event.key === 'Escape'){
+            closeLightbox();
+        }
+
+        if(event.key === 'ArrowLeft'){
+            showImage(currentIndex - 1);
+        }
+
+        if(event.key === 'ArrowRight'){
+            showImage(currentIndex + 1);
+        }
+
+    }
+);
+
+</script>
+
+</body>
+
+</html>
