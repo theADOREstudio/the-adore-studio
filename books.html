@@ -10,54 +10,144 @@
 
 <style>
 
-body{
+*{
     margin:0;
-    font-family:Georgia, serif;
-    background:white;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#ffffff;
     color:#333;
+    font-family:Georgia, serif;
 }
 
 header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:30px;
+    padding:22px 50px;
+    border-bottom:1px solid #e6e6e6;
+    background:#ffffff;
+}
+
+.logo{
+    width:230px;
+    height:auto;
+    display:block;
+}
+
+nav{
+    display:flex;
+    gap:32px;
+}
+
+nav a{
+    color:#666;
+    text-decoration:none;
+    font-size:16px;
+    letter-spacing:1px;
+    transition:color .2s ease;
+}
+
+nav a:hover{
+    color:#1d5f97;
+}
+
+main{
+    max-width:1050px;
+    margin:0 auto;
+    padding:70px 30px 100px;
+}
+
+.page-heading{
     text-align:center;
-    padding:60px 20px;
+    margin-bottom:75px;
 }
 
 h1{
-    font-size:56px;
+    font-size:52px;
     font-weight:normal;
-    letter-spacing:3px;
+    letter-spacing:2px;
+    margin-bottom:12px;
 }
 
 .subtitle{
     color:#777;
-    font-size:22px;
+    font-size:21px;
 }
 
 .collection{
-    max-width:1000px;
-    margin:70px auto;
-    padding:0 30px;
+    max-width:800px;
+    margin:0 auto;
 }
 
 .book{
+    text-align:center;
     margin-bottom:70px;
+}
+
+.book:last-child{
+    margin-bottom:0;
 }
 
 .book h2{
     font-weight:normal;
     font-size:36px;
-    margin-bottom:10px;
+    margin-bottom:12px;
 }
 
 .book p{
     color:#666;
+    font-size:18px;
     line-height:1.7;
 }
 
 footer{
     text-align:center;
-    padding:60px;
+    padding:45px 20px;
     color:#999;
+    border-top:1px solid #e6e6e6;
+}
+
+@media(max-width:800px){
+
+    header{
+        flex-direction:column;
+        padding:22px;
+    }
+
+    .logo{
+        width:220px;
+    }
+
+    nav{
+        flex-wrap:wrap;
+        justify-content:center;
+        gap:20px;
+    }
+
+    main{
+        padding:50px 20px 80px;
+    }
+
+    h1{
+        font-size:40px;
+    }
+
+    .subtitle{
+        font-size:18px;
+    }
+
+    .book h2{
+        font-size:30px;
+    }
+
+    .book p{
+        font-size:17px;
+    }
+
 }
 
 </style>
@@ -68,13 +158,32 @@ footer{
 
 <header>
 
+<a href="index.html">
+    <img src="oglogo.png"
+         alt="The Adore Studio"
+         class="logo">
+</a>
+
+<nav>
+    <a href="index.html">Gallery</a>
+    <a href="books.html">Books</a>
+    <a href="#">Prints</a>
+    <a href="about.html">About</a>
+</nav>
+
+</header>
+
+<main>
+
+<div class="page-heading">
+
 <h1>Collections</h1>
 
 <p class="subtitle">
 A growing library of photographic studies.
 </p>
 
-</header>
+</div>
 
 <div class="collection">
 
@@ -83,7 +192,8 @@ A growing library of photographic studies.
 <h2>Seaside in Light</h2>
 
 <p>
-A collection exploring the color, atmosphere, and changing light of Oregon's North Coast.</p>
+A collection exploring the color, atmosphere, and changing light of Oregon's North Coast.
+</p>
 
 </div>
 
@@ -92,7 +202,8 @@ A collection exploring the color, atmosphere, and changing light of Oregon's Nor
 <h2>Seaside in Perspective</h2>
 
 <p>
-A collection exploring the movement, scale, and perception of Oregon's North Coast.</p>
+A collection exploring the movement, scale, and perception of Oregon's North Coast.
+</p>
 
 </div>
 
@@ -101,11 +212,14 @@ A collection exploring the movement, scale, and perception of Oregon's North Coa
 <h2>Seaside in Relief</h2>
 
 <p>
-A collection exploring the texture, form, and contours of Oregon's North Coast.</p>
+A collection exploring the texture, form, and contours of Oregon's North Coast.
+</p>
 
 </div>
 
 </div>
+
+</main>
 
 <footer>
 
