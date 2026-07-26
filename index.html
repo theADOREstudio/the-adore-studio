@@ -86,17 +86,33 @@ h1{
     line-height:1.6;
 }
 
+/*
+True ordered grid.
+
+Images now display:
+1, 2, 3
+4, 5, 6
+7, 8, 9
+
+The order exactly follows gallery.js.
+*/
+
 .gallery{
-    columns:3 340px;
-    column-gap:32px;
+    display:grid;
+    grid-template-columns:repeat(3, minmax(0, 1fr));
+    gap:32px;
+    align-items:start;
+}
+
+.gallery-item{
+    display:block;
+    width:100%;
 }
 
 .gallery img{
     display:block;
     width:100%;
     height:auto;
-    margin:0 0 32px;
-    break-inside:avoid;
     cursor:pointer;
     background:#f3f3f1;
     box-shadow:0 3px 14px rgba(0,0,0,.06);
@@ -254,11 +270,8 @@ footer{
     }
 
     .gallery{
-        column-gap:22px;
-    }
-
-    .gallery img{
-        margin-bottom:22px;
+        grid-template-columns:repeat(2, minmax(0, 1fr));
+        gap:22px;
     }
 
     .lightbox{
@@ -269,7 +282,7 @@ footer{
 
 /* Phone */
 
-@media(max-width:700px){
+@media(max-width:600px){
 
     .logo{
         width:220px;
@@ -281,6 +294,11 @@ footer{
 
     .gallery-subtitle{
         font-size:16px;
+    }
+
+    .gallery{
+        grid-template-columns:1fr;
+        gap:22px;
     }
 
     .lightbox{
@@ -468,31 +486,42 @@ const lightboxNext = document.getElementById('lightboxNext');
 let currentIndex = 0;
 
 
-/* Build the gallery from gallery.js */
+/* Build gallery in the exact order listed in gallery.js */
 
 galleryOrder.forEach((item, index) => {
 
-    const image = document.createElement('img');
+    const galleryItem =
+        document.createElement('div');
 
-    image.src = item.image;
+    galleryItem.className =
+        'gallery-item';
+
+    const image =
+        document.createElement('img');
+
+    image.src =
+        item.image;
 
     image.alt =
         item.title ||
         'Fine art photograph by Theodore Paulson';
 
-    image.loading = 'lazy';
+    image.loading =
+        index < 9 ? 'eager' : 'lazy';
 
     image.addEventListener(
         'click',
         () => openLightbox(index)
     );
 
-    gallery.appendChild(image);
+    galleryItem.appendChild(image);
+
+    gallery.appendChild(galleryItem);
 
 });
 
 
-/* Display an image in the lightbox */
+/* Display image in lightbox */
 
 function showImage(index){
 
@@ -516,7 +545,7 @@ function showImage(index){
 }
 
 
-/* Open the lightbox */
+/* Open lightbox */
 
 function openLightbox(index){
 
@@ -536,7 +565,7 @@ function openLightbox(index){
 }
 
 
-/* Close the lightbox */
+/* Close lightbox */
 
 function closeLightbox(){
 
@@ -592,7 +621,7 @@ lightboxNext.addEventListener(
 );
 
 
-/* Close by clicking the background */
+/* Close by clicking outside the artwork */
 
 lightbox.addEventListener(
     'click',
