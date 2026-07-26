@@ -86,26 +86,30 @@ h1{
     line-height:1.6;
 }
 
-/* ORDERED MASONRY GALLERY */
+/* JUSTIFIED ORDERED GALLERY */
 
 .gallery{
-    display:grid;
-    grid-template-columns:repeat(3, minmax(0, 1fr));
-    grid-auto-rows:8px;
-    column-gap:32px;
-    row-gap:0;
-    align-items:start;
+    width:100%;
+}
+
+.gallery-row{
+    display:flex;
+    width:100%;
+    gap:28px;
+    margin-bottom:28px;
+    align-items:flex-start;
 }
 
 .gallery-item{
-    width:100%;
-    margin-bottom:32px;
+    flex:0 0 auto;
+    overflow:hidden;
 }
 
 .gallery-item img{
     display:block;
     width:100%;
-    height:auto;
+    height:100%;
+    object-fit:contain;
     cursor:pointer;
     background:#f3f3f1;
     box-shadow:0 3px 14px rgba(0,0,0,.06);
@@ -262,13 +266,9 @@ footer{
         margin-bottom:42px;
     }
 
-    .gallery{
-        grid-template-columns:repeat(2, minmax(0, 1fr));
-        column-gap:22px;
-    }
-
-    .gallery-item{
-        margin-bottom:22px;
+    .gallery-row{
+        gap:20px;
+        margin-bottom:20px;
     }
 
     .lightbox{
@@ -293,12 +293,20 @@ footer{
         font-size:16px;
     }
 
-    .gallery{
+    .gallery-row{
         display:block;
+        margin-bottom:0;
     }
 
     .gallery-item{
+        width:100% !important;
+        height:auto !important;
         margin-bottom:22px;
+    }
+
+    .gallery-item img{
+        width:100%;
+        height:auto;
     }
 
     .lightbox{
@@ -463,14 +471,6 @@ footer{
 
 </div>
 
-<!--
-The version number forces the browser to retrieve
-the newest gallery.js instead of showing an old cached copy.
-Increase this number whenever necessary.
--->
-
-<script src="gallery.js?v=5"></script>
-
 <script>
 
 const gallery =
@@ -496,94 +496,280 @@ const lightboxNext =
 
 let currentIndex = 0;
 
+let loadedArtwork = [];
 
-/* BUILD THE GALLERY */
 
-galleryOrder.forEach((item, index) => {
+/*
+Load a fresh copy of gallery.js every time.
 
-    const galleryItem =
-        document.createElement('div');
+This prevents GitHub Pages or the browser
+from using an older cached image order.
+*/
 
-    galleryItem.className =
-        'gallery-item';
+const galleryScript =
+    document.createElement('script');
 
-    const image =
-        document.createElement('img');
+galleryScript.src =
+    'gallery.js?v=' + Date.now();
 
-    image.src =
-        item.image;
+galleryScript.onload = () => {
 
-    image.alt =
-        item.title ||
-        'Fine art photograph by Theodore Paulson';
+    loadedArtwork = galleryOrder;
 
-    image.loading =
-        index < 9 ? 'eager' : 'lazy';
+    loadGalleryImages();
 
-    image.addEventListener(
-        'click',
-        () => openLightbox(index)
+};
+
+document.head.appendChild(galleryScript);
+
+
+/* LOAD IMAGE DIMENSIONS */
+
+async function loadGalleryImages(){
+
+    const imageData = await Promise.all(
+
+        loadedArtwork.map((item, index) => {
+
+            return new Promise(resolve => {
+
+                const image = new Image();
+
+                image.onload = () => {
+
+                    resolve({
+
+                        ...item,
+
+                        index:index,
+
+                        ratio:
+                            image.naturalWidth /
+                            image.naturalHeight
+
+                    });
+
+                };
+
+                image.onerror = () => {
+
+                    resolve({
+
+                        ...item,
+
+                        index:index,
+
+                        ratio:1.5
+
+                    });
+
+                };
+
+                image.src =
+                    item.image;
+
+            });
+
+        })
+
     );
 
-    image.addEventListener(
-        'load',
-        () => resizeGalleryItem(galleryItem)
-    );
+    buildJustifiedGallery(imageData);
 
-    galleryItem.appendChild(image);
-
-    gallery.appendChild(galleryItem);
-
-});
+}
 
 
-/* CREATE THE MASONRY HEIGHT */
+/* BUILD ROWS IN EXACT gallery.js ORDER */
 
-function resizeGalleryItem(item){
+function buildJustifiedGallery(items){
+
+    gallery.innerHTML = '';
 
     if(window.innerWidth <= 600){
-        item.style.gridRowEnd = '';
+
+        buildMobileGallery(items);
+
         return;
+
     }
 
-    const galleryStyles =
-        window.getComputedStyle(gallery);
+    const containerWidth =
+        gallery.clientWidth;
 
-    const rowHeight =
-        parseInt(
-            galleryStyles.getPropertyValue(
-                'grid-auto-rows'
-            )
-        );
+    const gap =
+        window.innerWidth <= 900 ? 20 : 28;
 
-    const image =
-        item.querySelector('img');
+    const targetHeight =
+        window.innerWidth <= 900 ? 210 : 270;
 
-    const itemHeight =
-        image.getBoundingClientRect().height +
-        parseInt(
-            window.getComputedStyle(item)
-                .marginBottom
-        );
+    let currentRow = [];
 
-    const rowSpan =
-        Math.ceil(itemHeight / rowHeight);
+    let totalRatio = 0;
 
-    item.style.gridRowEnd =
-        'span ' + rowSpan;
+    items.forEach((item, itemPosition) => {
+
+        currentRow.push(item);
+
+        totalRatio += item.ratio;
+
+        const projectedWidth =
+            totalRatio * targetHeight +
+            gap * (currentRow.length - 1);
+
+        const isLastItem =
+            itemPosition === items.length - 1;
+
+        if(
+            projectedWidth >= containerWidth ||
+            isLastItem
+        ){
+
+            const isFinalIncompleteRow =
+                isLastItem &&
+                projectedWidth < containerWidth;
+
+            createGalleryRow(
+                currentRow,
+                totalRatio,
+                containerWidth,
+                gap,
+                targetHeight,
+                isFinalIncompleteRow
+            );
+
+            currentRow = [];
+
+            totalRatio = 0;
+
+        }
+
+    });
 
 }
 
 
-/* RECALCULATE AFTER WINDOW RESIZING */
+/* CREATE ONE JUSTIFIED ROW */
 
-function resizeAllGalleryItems(){
+function createGalleryRow(
+    rowItems,
+    totalRatio,
+    containerWidth,
+    gap,
+    targetHeight,
+    finalIncompleteRow
+){
 
-    document
-        .querySelectorAll('.gallery-item')
-        .forEach(resizeGalleryItem);
+    const row =
+        document.createElement('div');
+
+    row.className =
+        'gallery-row';
+
+    const availableWidth =
+        containerWidth -
+        gap * (rowItems.length - 1);
+
+    let rowHeight =
+        availableWidth / totalRatio;
+
+    if(finalIncompleteRow){
+
+        rowHeight =
+            Math.min(rowHeight, targetHeight);
+
+    }
+
+    rowItems.forEach(item => {
+
+        const galleryItem =
+            document.createElement('div');
+
+        galleryItem.className =
+            'gallery-item';
+
+        galleryItem.style.width =
+            (item.ratio * rowHeight) + 'px';
+
+        galleryItem.style.height =
+            rowHeight + 'px';
+
+        const image =
+            document.createElement('img');
+
+        image.src =
+            item.image;
+
+        image.alt =
+            item.title ||
+            'Fine art photograph by Theodore Paulson';
+
+        image.loading =
+            item.index < 9 ? 'eager' : 'lazy';
+
+        image.addEventListener(
+            'click',
+            () => openLightbox(item.index)
+        );
+
+        galleryItem.appendChild(image);
+
+        row.appendChild(galleryItem);
+
+    });
+
+    gallery.appendChild(row);
 
 }
+
+
+/* MOBILE: ONE IMAGE PER ROW */
+
+function buildMobileGallery(items){
+
+    items.forEach(item => {
+
+        const row =
+            document.createElement('div');
+
+        row.className =
+            'gallery-row';
+
+        const galleryItem =
+            document.createElement('div');
+
+        galleryItem.className =
+            'gallery-item';
+
+        const image =
+            document.createElement('img');
+
+        image.src =
+            item.image;
+
+        image.alt =
+            item.title ||
+            'Fine art photograph by Theodore Paulson';
+
+        image.loading =
+            item.index < 4 ? 'eager' : 'lazy';
+
+        image.addEventListener(
+            'click',
+            () => openLightbox(item.index)
+        );
+
+        galleryItem.appendChild(image);
+
+        row.appendChild(galleryItem);
+
+        gallery.appendChild(row);
+
+    });
+
+}
+
+
+/* REBUILD AFTER RESIZING */
 
 let resizeTimer;
 
@@ -591,24 +777,29 @@ window.addEventListener('resize', () => {
 
     clearTimeout(resizeTimer);
 
-    resizeTimer = setTimeout(
-        resizeAllGalleryItems,
-        150
-    );
+    resizeTimer = setTimeout(() => {
+
+        if(loadedArtwork.length){
+
+            loadGalleryImages();
+
+        }
+
+    }, 180);
 
 });
 
 
-/* DISPLAY IMAGE IN LIGHTBOX */
+/* LIGHTBOX */
 
 function showImage(index){
 
     currentIndex =
-        (index + galleryOrder.length) %
-        galleryOrder.length;
+        (index + loadedArtwork.length) %
+        loadedArtwork.length;
 
     const selectedImage =
-        galleryOrder[currentIndex];
+        loadedArtwork[currentIndex];
 
     lightboxImage.src =
         selectedImage.image;
@@ -622,8 +813,6 @@ function showImage(index){
 
 }
 
-
-/* OPEN LIGHTBOX */
 
 function openLightbox(index){
 
@@ -643,8 +832,6 @@ function openLightbox(index){
 }
 
 
-/* CLOSE LIGHTBOX */
-
 function closeLightbox(){
 
     lightbox.classList.remove('active');
@@ -663,12 +850,11 @@ function closeLightbox(){
 }
 
 
-/* LIGHTBOX BUTTONS */
-
 lightboxClose.addEventListener(
     'click',
     closeLightbox
 );
+
 
 lightboxPrev.addEventListener(
     'click',
@@ -680,6 +866,7 @@ lightboxPrev.addEventListener(
 
     }
 );
+
 
 lightboxNext.addEventListener(
     'click',
@@ -693,21 +880,19 @@ lightboxNext.addEventListener(
 );
 
 
-/* CLOSE BY CLICKING BACKGROUND */
-
 lightbox.addEventListener(
     'click',
     event => {
 
         if(event.target === lightbox){
+
             closeLightbox();
+
         }
 
     }
 );
 
-
-/* KEYBOARD CONTROLS */
 
 document.addEventListener(
     'keydown',
@@ -720,15 +905,21 @@ document.addEventListener(
         }
 
         if(event.key === 'Escape'){
+
             closeLightbox();
+
         }
 
         if(event.key === 'ArrowLeft'){
+
             showImage(currentIndex - 1);
+
         }
 
         if(event.key === 'ArrowRight'){
+
             showImage(currentIndex + 1);
+
         }
 
     }
