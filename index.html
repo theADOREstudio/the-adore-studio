@@ -26,7 +26,7 @@ body.lightbox-open{
     overflow:hidden;
 }
 
-/* Header */
+/* HEADER */
 
 header{
     display:flex;
@@ -61,7 +61,7 @@ nav a:hover{
     color:#1d5f97;
 }
 
-/* Main gallery */
+/* PAGE */
 
 main{
     max-width:1560px;
@@ -86,30 +86,23 @@ h1{
     line-height:1.6;
 }
 
-/*
-True ordered grid.
-
-Images now display:
-1, 2, 3
-4, 5, 6
-7, 8, 9
-
-The order exactly follows gallery.js.
-*/
+/* ORDERED MASONRY GALLERY */
 
 .gallery{
     display:grid;
     grid-template-columns:repeat(3, minmax(0, 1fr));
-    gap:32px;
+    grid-auto-rows:8px;
+    column-gap:32px;
+    row-gap:0;
     align-items:start;
 }
 
 .gallery-item{
-    display:block;
     width:100%;
+    margin-bottom:32px;
 }
 
-.gallery img{
+.gallery-item img{
     display:block;
     width:100%;
     height:auto;
@@ -121,12 +114,12 @@ The order exactly follows gallery.js.
         box-shadow .28s ease;
 }
 
-.gallery img:hover{
+.gallery-item img:hover{
     transform:translateY(-4px);
     box-shadow:0 12px 28px rgba(0,0,0,.13);
 }
 
-/* Museum-style lightbox */
+/* LIGHTBOX */
 
 .lightbox{
     display:none;
@@ -184,13 +177,13 @@ The order exactly follows gallery.js.
 }
 
 .lightbox-studio{
+    color:#888;
     font-size:15px;
     letter-spacing:1.6px;
     text-transform:uppercase;
-    color:#888;
 }
 
-/* Lightbox controls */
+/* LIGHTBOX CONTROLS */
 
 .lightbox-close,
 .lightbox-arrow{
@@ -221,8 +214,8 @@ The order exactly follows gallery.js.
 .lightbox-arrow{
     top:50%;
     transform:translateY(-50%);
-    font-size:56px;
     padding:18px;
+    font-size:56px;
 }
 
 .lightbox-arrow:hover{
@@ -237,7 +230,7 @@ The order exactly follows gallery.js.
     right:12px;
 }
 
-/* Footer */
+/* FOOTER */
 
 footer{
     text-align:center;
@@ -246,7 +239,7 @@ footer{
     border-top:1px solid #e6e6e6;
 }
 
-/* Tablet */
+/* TABLET */
 
 @media(max-width:900px){
 
@@ -256,9 +249,9 @@ footer{
     }
 
     nav{
-        gap:20px;
-        flex-wrap:wrap;
         justify-content:center;
+        flex-wrap:wrap;
+        gap:20px;
     }
 
     main{
@@ -271,7 +264,11 @@ footer{
 
     .gallery{
         grid-template-columns:repeat(2, minmax(0, 1fr));
-        gap:22px;
+        column-gap:22px;
+    }
+
+    .gallery-item{
+        margin-bottom:22px;
     }
 
     .lightbox{
@@ -280,7 +277,7 @@ footer{
 
 }
 
-/* Phone */
+/* PHONE */
 
 @media(max-width:600px){
 
@@ -297,8 +294,11 @@ footer{
     }
 
     .gallery{
-        grid-template-columns:1fr;
-        gap:22px;
+        display:block;
+    }
+
+    .gallery-item{
+        margin-bottom:22px;
     }
 
     .lightbox{
@@ -319,8 +319,8 @@ footer{
         top:auto;
         bottom:18px;
         transform:none;
-        font-size:42px;
         padding:8px 14px;
+        font-size:42px;
     }
 
     .lightbox-arrow:hover{
@@ -356,52 +356,50 @@ footer{
 
 <header>
 
-    <a href="index.html">
+<a href="index.html">
 
-        <img
-            src="oglogo.png"
-            alt="The Adore Studio"
-            class="logo">
+    <img
+        src="oglogo.png"
+        alt="The Adore Studio"
+        class="logo">
 
-    </a>
+</a>
 
-    <nav>
+<nav>
 
-        <a href="index.html">Gallery</a>
+    <a href="index.html">Gallery</a>
 
-        <a href="books.html">Books</a>
+    <a href="books.html">Books</a>
 
-        <a href="prints.html">Prints</a>
+    <a href="prints.html">Prints</a>
 
-        <a href="about.html">About</a>
+    <a href="about.html">About</a>
 
-    </nav>
+</nav>
 
 </header>
 
 <main>
 
-    <div class="gallery-heading">
+<div class="gallery-heading">
 
-        <h1>Gallery</h1>
+    <h1>Gallery</h1>
 
-        <p class="gallery-subtitle">
-            A curated collection exploring Oregon's North Coast.
-        </p>
+    <p class="gallery-subtitle">
+        A curated collection exploring Oregon's North Coast.
+    </p>
 
-    </div>
+</div>
 
-    <div
-        class="gallery"
-        id="gallery">
-    </div>
+<div
+    class="gallery"
+    id="gallery">
+</div>
 
 </main>
 
 <footer>
-
     © 2026 The Adore Studio
-
 </footer>
 
 <div
@@ -465,28 +463,41 @@ footer{
 
 </div>
 
-<script src="gallery.js"></script>
+<!--
+The version number forces the browser to retrieve
+the newest gallery.js instead of showing an old cached copy.
+Increase this number whenever necessary.
+-->
+
+<script src="gallery.js?v=5"></script>
 
 <script>
 
-const gallery = document.getElementById('gallery');
+const gallery =
+    document.getElementById('gallery');
 
-const lightbox = document.getElementById('lightbox');
+const lightbox =
+    document.getElementById('lightbox');
 
-const lightboxImage = document.getElementById('lightboxImage');
+const lightboxImage =
+    document.getElementById('lightboxImage');
 
-const lightboxTitle = document.getElementById('lightboxTitle');
+const lightboxTitle =
+    document.getElementById('lightboxTitle');
 
-const lightboxClose = document.getElementById('lightboxClose');
+const lightboxClose =
+    document.getElementById('lightboxClose');
 
-const lightboxPrev = document.getElementById('lightboxPrev');
+const lightboxPrev =
+    document.getElementById('lightboxPrev');
 
-const lightboxNext = document.getElementById('lightboxNext');
+const lightboxNext =
+    document.getElementById('lightboxNext');
 
 let currentIndex = 0;
 
 
-/* Build gallery in the exact order listed in gallery.js */
+/* BUILD THE GALLERY */
 
 galleryOrder.forEach((item, index) => {
 
@@ -514,6 +525,11 @@ galleryOrder.forEach((item, index) => {
         () => openLightbox(index)
     );
 
+    image.addEventListener(
+        'load',
+        () => resizeGalleryItem(galleryItem)
+    );
+
     galleryItem.appendChild(image);
 
     gallery.appendChild(galleryItem);
@@ -521,7 +537,69 @@ galleryOrder.forEach((item, index) => {
 });
 
 
-/* Display image in lightbox */
+/* CREATE THE MASONRY HEIGHT */
+
+function resizeGalleryItem(item){
+
+    if(window.innerWidth <= 600){
+        item.style.gridRowEnd = '';
+        return;
+    }
+
+    const galleryStyles =
+        window.getComputedStyle(gallery);
+
+    const rowHeight =
+        parseInt(
+            galleryStyles.getPropertyValue(
+                'grid-auto-rows'
+            )
+        );
+
+    const image =
+        item.querySelector('img');
+
+    const itemHeight =
+        image.getBoundingClientRect().height +
+        parseInt(
+            window.getComputedStyle(item)
+                .marginBottom
+        );
+
+    const rowSpan =
+        Math.ceil(itemHeight / rowHeight);
+
+    item.style.gridRowEnd =
+        'span ' + rowSpan;
+
+}
+
+
+/* RECALCULATE AFTER WINDOW RESIZING */
+
+function resizeAllGalleryItems(){
+
+    document
+        .querySelectorAll('.gallery-item')
+        .forEach(resizeGalleryItem);
+
+}
+
+let resizeTimer;
+
+window.addEventListener('resize', () => {
+
+    clearTimeout(resizeTimer);
+
+    resizeTimer = setTimeout(
+        resizeAllGalleryItems,
+        150
+    );
+
+});
+
+
+/* DISPLAY IMAGE IN LIGHTBOX */
 
 function showImage(index){
 
@@ -545,7 +623,7 @@ function showImage(index){
 }
 
 
-/* Open lightbox */
+/* OPEN LIGHTBOX */
 
 function openLightbox(index){
 
@@ -565,7 +643,7 @@ function openLightbox(index){
 }
 
 
-/* Close lightbox */
+/* CLOSE LIGHTBOX */
 
 function closeLightbox(){
 
@@ -585,15 +663,12 @@ function closeLightbox(){
 }
 
 
-/* Close button */
+/* LIGHTBOX BUTTONS */
 
 lightboxClose.addEventListener(
     'click',
     closeLightbox
 );
-
-
-/* Previous image */
 
 lightboxPrev.addEventListener(
     'click',
@@ -605,9 +680,6 @@ lightboxPrev.addEventListener(
 
     }
 );
-
-
-/* Next image */
 
 lightboxNext.addEventListener(
     'click',
@@ -621,23 +693,21 @@ lightboxNext.addEventListener(
 );
 
 
-/* Close by clicking outside the artwork */
+/* CLOSE BY CLICKING BACKGROUND */
 
 lightbox.addEventListener(
     'click',
     event => {
 
         if(event.target === lightbox){
-
             closeLightbox();
-
         }
 
     }
 );
 
 
-/* Keyboard controls */
+/* KEYBOARD CONTROLS */
 
 document.addEventListener(
     'keydown',
@@ -650,21 +720,15 @@ document.addEventListener(
         }
 
         if(event.key === 'Escape'){
-
             closeLightbox();
-
         }
 
         if(event.key === 'ArrowLeft'){
-
             showImage(currentIndex - 1);
-
         }
 
         if(event.key === 'ArrowRight'){
-
             showImage(currentIndex + 1);
-
         }
 
     }
