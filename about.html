@@ -131,6 +131,34 @@ h1{
     color:#1d5f97;
 }
 
+.email-button{
+    border:0;
+    background:transparent;
+    color:#555;
+    font-family:Georgia, serif;
+    font-size:19px;
+    cursor:pointer;
+    padding:0;
+    transition:color .2s ease;
+}
+
+.email-button:hover{
+    color:#1d5f97;
+}
+
+.copy-status{
+    min-height:24px;
+    margin-top:6px;
+    color:#777;
+    font-size:15px;
+    opacity:0;
+    transition:opacity .25s ease;
+}
+
+.copy-status.visible{
+    opacity:1;
+}
+
 footer{
     text-align:center;
     padding:45px 20px;
@@ -181,7 +209,8 @@ footer{
         font-size:26px;
     }
 
-    .contact p{
+    .contact p,
+    .email-button{
         font-size:18px;
     }
 
@@ -254,10 +283,19 @@ footer{
     <h2>CONTACT</h2>
 
     <p>
-        <a href="mailto:adore@theadore.studio">
+        <button
+            type="button"
+            class="email-button"
+            id="emailButton">
             adore@theadore.studio
-        </a>
+        </button>
     </p>
+
+    <div
+        class="copy-status"
+        id="copyStatus">
+        Copied!
+    </div>
 
     <p>
         <a href="https://theadore.studio">
@@ -274,6 +312,47 @@ footer{
 <footer>
     © 2026 The Adore Studio
 </footer>
+
+<script>
+
+const emailButton = document.getElementById('emailButton');
+const copyStatus = document.getElementById('copyStatus');
+const emailAddress = 'adore@theadore.studio';
+
+emailButton.addEventListener('click', async () => {
+
+    try{
+
+        await navigator.clipboard.writeText(emailAddress);
+
+    }catch(error){
+
+        const temporaryTextArea = document.createElement('textarea');
+
+        temporaryTextArea.value = emailAddress;
+        temporaryTextArea.style.position = 'fixed';
+        temporaryTextArea.style.opacity = '0';
+
+        document.body.appendChild(temporaryTextArea);
+
+        temporaryTextArea.focus();
+        temporaryTextArea.select();
+
+        document.execCommand('copy');
+
+        temporaryTextArea.remove();
+
+    }
+
+    copyStatus.classList.add('visible');
+
+    setTimeout(() => {
+        copyStatus.classList.remove('visible');
+    }, 1600);
+
+});
+
+</script>
 
 </body>
 
