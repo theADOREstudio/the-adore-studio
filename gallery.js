@@ -1,6 +1,6 @@
 const galleryOrder = [
-    { image: "Gallery002.jpg", title: "Gallery 002", collection: "All" },
-    { image: "Gallery003.jpg", title: "Gallery 003", collection: "All" },
+    { image: "Gallery002.jpg", title: "Light 001", collection: "Light" },
+    { image: "Gallery003.jpg", title: "Perspective 003", collection: "Perspective" },
     { image: "Gallery007.jpg", title: "Gallery 007", collection: "All" },
     { image: "Gallery008.jpg", title: "Gallery 008", collection: "All" },
     { image: "Gallery009.jpg", title: "Gallery 009", collection: "All" },
