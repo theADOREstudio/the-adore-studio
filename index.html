@@ -83,19 +83,22 @@ h1{
 }
 
 /*
-The grid displays photographs in the exact order
-listed in gallery.js: left to right, then downward.
+The gallery uses a masonry-style column layout so photographs
+cascade naturally without empty grid spaces.
 */
 
 .gallery{
-    display:grid;
-    grid-template-columns:repeat(3, minmax(0, 1fr));
-    gap:30px;
-    align-items:start;
+    column-count:3;
+    column-gap:30px;
 }
 
 .gallery-item{
+    display:inline-block;
     width:100%;
+    margin:0 0 30px;
+    break-inside:avoid;
+    -webkit-column-break-inside:avoid;
+    page-break-inside:avoid;
 }
 
 .gallery-item img{
@@ -116,7 +119,7 @@ listed in gallery.js: left to right, then downward.
 }
 
 .gallery-error{
-    grid-column:1 / -1;
+    column-span:all;
     padding:50px 20px;
     text-align:center;
     color:#777;
@@ -261,8 +264,12 @@ footer{
     }
 
     .gallery{
-        grid-template-columns:repeat(2, minmax(0, 1fr));
-        gap:22px;
+        column-count:2;
+        column-gap:22px;
+    }
+
+    .gallery-item{
+        margin-bottom:22px;
     }
 
     .lightbox{
@@ -286,8 +293,12 @@ footer{
     }
 
     .gallery{
-        grid-template-columns:1fr;
-        gap:22px;
+        column-count:1;
+        column-gap:0;
+    }
+
+    .gallery-item{
+        margin-bottom:22px;
     }
 
     .lightbox{
@@ -433,8 +444,7 @@ footer{
 
 </div>
 
-<!-- gallery.js must be in the same GitHub folder as index.html -->
-<script src="gallery.js?v=20"></script>
+<script src="gallery.js?v=21"></script>
 
 <script>
 
