@@ -75,9 +75,6 @@ const galleryOrder = [
     { image: "Gallery087.jpg", title: "Gallery 087", collection: "All" },
     { image: "Gallery088.jpg", title: "Gallery 088", collection: "All" },
     { image: "Gallery089.jpg", title: "Gallery 089", collection: "All" },
-    { image: "Gallery090.jpg", title: "Gallery 090", collection: "All" },
-    { image: "Gallery091.jpg", title: "Gallery 091", collection: "All" },
-    { image: "Gallery092.jpg", title: "Gallery 092", collection: "All" },
     { image: "Gallery093.jpg", title: "Gallery 093", collection: "All" },
     { image: "Gallery094.jpg", title: "Gallery 094", collection: "All" },
     { image: "Gallery095.jpg", title: "Gallery 095", collection: "All" },
@@ -107,4 +104,7 @@ const galleryOrder = [
     { image: "Gallery084.jpg", title: "Gallery 084", collection: "All" },
     { image: "Gallery085.jpg", title: "Gallery 085", collection: "All" },
     { image: "Gallery086.jpg", title: "Gallery 086", collection: "All" },
+    { image: "Gallery090.jpg", title: "Gallery 090", collection: "All" },
+    { image: "Gallery091.jpg", title: "Gallery 091", collection: "All" },
+    { image: "Gallery092.jpg", title: "Gallery 092", collection: "All" },
 ];
