@@ -83,22 +83,23 @@ h1{
 }
 
 /*
-The gallery uses a masonry-style column layout so photographs
-cascade naturally without empty grid spaces.
+Masonry grid:
+Images remain in gallery.js order from left to right,
+then continue onto the next row.
 */
 
 .gallery{
-    column-count:3;
+    display:grid;
+    grid-template-columns:repeat(3, minmax(0, 1fr));
+    grid-auto-rows:8px;
     column-gap:30px;
+    row-gap:0;
+    align-items:start;
 }
 
 .gallery-item{
-    display:inline-block;
     width:100%;
-    margin:0 0 30px;
-    break-inside:avoid;
-    -webkit-column-break-inside:avoid;
-    page-break-inside:avoid;
+    margin-bottom:30px;
 }
 
 .gallery-item img{
@@ -119,7 +120,7 @@ cascade naturally without empty grid spaces.
 }
 
 .gallery-error{
-    column-span:all;
+    grid-column:1 / -1;
     padding:50px 20px;
     text-align:center;
     color:#777;
@@ -264,7 +265,7 @@ footer{
     }
 
     .gallery{
-        column-count:2;
+        grid-template-columns:repeat(2, minmax(0, 1fr));
         column-gap:22px;
     }
 
@@ -293,7 +294,7 @@ footer{
     }
 
     .gallery{
-        column-count:1;
+        grid-template-columns:1fr;
         column-gap:0;
     }
 
@@ -444,7 +445,7 @@ footer{
 
 </div>
 
-<script src="gallery.js?v=21"></script>
+<script src="gallery.js?v=22"></script>
 
 <script>
 
@@ -485,6 +486,8 @@ if(typeof galleryOrder === 'undefined'){
         image.loading =
             index < 9 ? 'eager' : 'lazy';
 
+        image.addEventListener('load', resizeGalleryItem);
+
         image.addEventListener(
             'click',
             () => openLightbox(index)
@@ -496,6 +499,67 @@ if(typeof galleryOrder === 'undefined'){
     });
 
 }
+
+function resizeGalleryItem(event){
+
+    const image = event.target;
+    const item = image.closest('.gallery-item');
+
+    if(!item){
+        return;
+    }
+
+    const galleryStyles = window.getComputedStyle(gallery);
+    const rowHeight = parseInt(
+        galleryStyles.getPropertyValue('grid-auto-rows')
+    );
+
+    const itemStyles = window.getComputedStyle(item);
+    const bottomMargin = parseInt(
+        itemStyles.getPropertyValue('margin-bottom')
+    );
+
+    const itemHeight =
+        image.getBoundingClientRect().height + bottomMargin;
+
+    const rowSpan = Math.ceil(itemHeight / rowHeight);
+
+    item.style.gridRowEnd = `span ${rowSpan}`;
+
+}
+
+function resizeAllGalleryItems(){
+
+    document
+        .querySelectorAll('.gallery-item img')
+        .forEach(image => {
+
+            if(image.complete){
+                resizeGalleryItem({target:image});
+            }
+
+        });
+
+}
+
+window.addEventListener(
+    'load',
+    resizeAllGalleryItems
+);
+
+window.addEventListener(
+    'resize',
+    () => {
+
+        clearTimeout(window.galleryResizeTimer);
+
+        window.galleryResizeTimer = setTimeout(
+            resizeAllGalleryItems,
+            150
+        );
+
+    }
+);
 
 function showImage(index){
 
