@@ -1,5 +1,4 @@
 const galleryOrder = [
-    { image: "Gallery003.jpg", title: "Gallery 003", collection: "All" },
     { image: "Gallery008.jpg", title: "Gallery 008", collection: "All" },
     { image: "Gallery009.jpg", title: "Gallery 009", collection: "All" },
     { image: "Gallery010.jpg", title: "Gallery 010", collection: "All" },
@@ -13,6 +12,7 @@ const galleryOrder = [
     { image: "Gallery018.jpg", title: "Gallery 018", collection: "All" },
     { image: "Gallery019.jpg", title: "Gallery 019", collection: "All" },
     { image: "Gallery020.jpg", title: "Gallery 020", collection: "All" },
+    { image: "Gallery003.jpg", title: "Gallery 003", collection: "All" },
     { image: "Gallery021.jpg", title: "Gallery 021", collection: "All" },
     { image: "Gallery007.jpg", title: "Gallery 007", collection: "All" },
     { image: "Gallery022.jpg", title: "Gallery 022", collection: "All" }, 
