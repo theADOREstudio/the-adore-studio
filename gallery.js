@@ -63,7 +63,6 @@ const galleryOrder = [
     { image: "Gallery069.jpg", title: "Gallery 069", collection: "All" },
     { image: "Gallery070.jpg", title: "Gallery 070", collection: "All" },
     { image: "Gallery071.jpg", title: "Gallery 071", collection: "All" },
-    { image: "Gallery072.jpg", title: "Gallery 072", collection: "All" },
     { image: "Gallery073.jpg", title: "Gallery 073", collection: "All" },
     { image: "Gallery074.jpg", title: "Gallery 074", collection: "All" },
     { image: "Gallery075.jpg", title: "Gallery 075", collection: "All" },
