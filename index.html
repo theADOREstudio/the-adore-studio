@@ -1,294 +1,685 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gallery | The Adore Studio</title>
+
+<title>The Adore Studio</title>
+
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:#fff;color:#333;font-family:Georgia,serif}
-body.lightbox-open{overflow:hidden}
-header{display:flex;justify-content:space-between;align-items:center;gap:30px;padding:22px 50px;border-bottom:1px solid #e6e6e6;background:#fff}
-.logo{width:230px;height:auto;display:block}
-nav{display:flex;gap:32px}
-nav a{color:#666;text-decoration:none;font-size:16px;letter-spacing:1px;transition:color .2s ease}
-nav a:hover{color:#1d5f97}
-main{max-width:1560px;margin:0 auto;padding:58px 34px 85px}
-.gallery-heading{text-align:center;margin-bottom:58px}
-h1{font-size:46px;font-weight:normal;margin-bottom:12px}
-.gallery-subtitle{color:#777;font-size:18px;line-height:1.6}
-.gallery{columns:3 340px;column-gap:32px}
-.gallery img{display:block;width:100%;height:auto;margin:0 0 32px;break-inside:avoid;cursor:pointer;background:#f3f3f1;box-shadow:0 3px 14px rgba(0,0,0,.06);transition:transform .28s ease,box-shadow .28s ease}
-.gallery img:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(0,0,0,.13)}
-.lightbox{display:none;position:fixed;inset:0;z-index:9999;background:#f7f7f4;align-items:center;justify-content:center;padding:34px 90px}
-.lightbox.active{display:flex}
-.lightbox-content{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.lightbox-frame{display:flex;align-items:center;justify-content:center;max-width:92vw;max-height:78vh;padding:18px;background:#fff;box-shadow:0 18px 48px rgba(0,0,0,.16)}
-.lightbox-image{display:block;max-width:86vw;max-height:72vh;width:auto;height:auto;object-fit:contain}
-.lightbox-caption{margin-top:22px;text-align:center;color:#555}
-.lightbox-title{font-size:20px;margin-bottom:5px}
-.lightbox-studio{font-size:15px;letter-spacing:1.6px;text-transform:uppercase;color:#888}
-.lightbox-close,.lightbox-arrow{position:absolute;border:0;background:transparent;color:#444;font-family:Arial,sans-serif;cursor:pointer;line-height:1;opacity:.78;transition:opacity .2s ease,transform .2s ease}
-.lightbox-close:hover,.lightbox-arrow:hover{opacity:1}
-.lightbox-close{top:18px;left:28px;right:auto;font-size:46px}
-.lightbox-arrow{top:50%;transform:translateY(-50%);font-size:56px;padding:18px}
-.lightbox-arrow:hover{transform:translateY(-50%) scale(1.06)}
-.lightbox-prev{left:12px}
-.lightbox-next{right:12px}
-footer{text-align:center;padding:38px 20px;color:#999;border-top:1px solid #e6e6e6}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#ffffff;
+    color:#333;
+    font-family:Georgia, serif;
+}
+
+body.lightbox-open{
+    overflow:hidden;
+}
+
+header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:30px;
+    padding:22px 50px;
+    border-bottom:1px solid #e6e6e6;
+    background:#ffffff;
+}
+
+.logo{
+    display:block;
+    width:230px;
+    height:auto;
+}
+
+nav{
+    display:flex;
+    gap:32px;
+}
+
+nav a{
+    color:#666;
+    text-decoration:none;
+    font-size:16px;
+    letter-spacing:1px;
+    transition:color .2s ease;
+}
+
+nav a:hover{
+    color:#1d5f97;
+}
+
+main{
+    max-width:1560px;
+    margin:0 auto;
+    padding:58px 34px 85px;
+}
+
+.gallery-heading{
+    margin-bottom:58px;
+    text-align:center;
+}
+
+h1{
+    margin-bottom:12px;
+    font-size:46px;
+    font-weight:normal;
+}
+
+.gallery-subtitle{
+    color:#777;
+    font-size:18px;
+    line-height:1.6;
+}
+
+/*
+Masonry grid:
+Images remain in gallery.js order from left to right,
+then continue onto the next row.
+*/
+
+.gallery{
+    display:grid;
+    grid-template-columns:repeat(3, minmax(0, 1fr));
+    grid-auto-rows:8px;
+    column-gap:30px;
+    row-gap:0;
+    align-items:start;
+}
+
+.gallery-item{
+    width:100%;
+    margin-bottom:30px;
+}
+
+.gallery-item img{
+    display:block;
+    width:100%;
+    height:auto;
+    cursor:pointer;
+    background:#f3f3f1;
+    box-shadow:0 3px 14px rgba(0,0,0,.06);
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
+}
+
+.gallery-item img:hover{
+    transform:translateY(-4px);
+    box-shadow:0 12px 28px rgba(0,0,0,.13);
+}
+
+.gallery-error{
+    grid-column:1 / -1;
+    padding:50px 20px;
+    text-align:center;
+    color:#777;
+    font-size:18px;
+}
+
+/* LIGHTBOX */
+
+.lightbox{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    padding:34px 90px;
+    background:#f7f7f4;
+    align-items:center;
+    justify-content:center;
+}
+
+.lightbox.active{
+    display:flex;
+}
+
+.lightbox-content{
+    width:100%;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+}
+
+.lightbox-frame{
+    display:flex;
+    max-width:92vw;
+    max-height:78vh;
+    padding:18px;
+    background:#ffffff;
+    box-shadow:0 18px 48px rgba(0,0,0,.16);
+    align-items:center;
+    justify-content:center;
+}
+
+.lightbox-image{
+    display:block;
+    width:auto;
+    height:auto;
+    max-width:86vw;
+    max-height:72vh;
+    object-fit:contain;
+}
+
+.lightbox-caption{
+    margin-top:22px;
+    color:#555;
+    text-align:center;
+}
+
+.lightbox-title{
+    margin-bottom:5px;
+    font-size:20px;
+}
+
+.lightbox-studio{
+    color:#888;
+    font-size:15px;
+    letter-spacing:1.6px;
+    text-transform:uppercase;
+}
+
+.lightbox-close,
+.lightbox-arrow{
+    position:absolute;
+    border:0;
+    background:transparent;
+    color:#444;
+    font-family:Arial, sans-serif;
+    cursor:pointer;
+    line-height:1;
+    opacity:.78;
+    transition:
+        opacity .2s ease,
+        transform .2s ease;
+}
+
+.lightbox-close:hover,
+.lightbox-arrow:hover{
+    opacity:1;
+}
+
+.lightbox-close{
+    top:18px;
+    right:28px;
+    font-size:46px;
+}
+
+.lightbox-arrow{
+    top:50%;
+    padding:18px;
+    font-size:56px;
+    transform:translateY(-50%);
+}
+
+.lightbox-arrow:hover{
+    transform:translateY(-50%) scale(1.06);
+}
+
+.lightbox-prev{
+    left:12px;
+}
+
+.lightbox-next{
+    right:12px;
+}
+
+footer{
+    padding:38px 20px;
+    border-top:1px solid #e6e6e6;
+    color:#999;
+    text-align:center;
+}
 
 @media(max-width:900px){
-header{flex-direction:column;padding:22px}
-nav{gap:20px;flex-wrap:wrap;justify-content:center}
-main{padding:42px 20px 65px}
-.gallery-heading{margin-bottom:42px}
-.gallery{column-gap:22px}
-.gallery img{margin-bottom:22px}
-.lightbox{padding:58px 52px 30px}
-.lightbox-frame{padding:12px;max-height:76vh}
-.lightbox-image{max-height:70vh}
+
+    header{
+        flex-direction:column;
+        padding:22px;
+    }
+
+    nav{
+        justify-content:center;
+        flex-wrap:wrap;
+        gap:20px;
+    }
+
+    main{
+        padding:42px 20px 65px;
+    }
+
+    .gallery-heading{
+        margin-bottom:42px;
+    }
+
+    .gallery{
+        grid-template-columns:repeat(2, minmax(0, 1fr));
+        column-gap:22px;
+    }
+
+    .gallery-item{
+        margin-bottom:22px;
+    }
+
+    .lightbox{
+        padding:58px 52px 30px;
+    }
+
 }
 
-@media(max-width:700px){
-.logo{width:220px}
-h1{font-size:36px}
-.gallery-subtitle{font-size:16px}
-.lightbox{padding:58px 12px 24px}
-.lightbox-frame{max-width:94vw;padding:8px}
-.lightbox-image{max-width:90vw;max-height:66vh}
-.lightbox-arrow{top:auto;bottom:18px;transform:none;font-size:42px;padding:8px 14px}
-.lightbox-arrow:hover{transform:scale(1.06)}
-.lightbox-prev{left:18px}
-.lightbox-next{right:18px}
-.lightbox-close{top:10px;left:16px;right:auto;font-size:42px}
-.lightbox-caption{margin-top:16px;padding-bottom:42px}
-.lightbox-title{font-size:18px}
+@media(max-width:600px){
+
+    .logo{
+        width:220px;
+    }
+
+    h1{
+        font-size:36px;
+    }
+
+    .gallery-subtitle{
+        font-size:16px;
+    }
+
+    .gallery{
+        grid-template-columns:1fr;
+        column-gap:0;
+    }
+
+    .gallery-item{
+        margin-bottom:22px;
+    }
+
+    .lightbox{
+        padding:58px 12px 24px;
+    }
+
+    .lightbox-frame{
+        max-width:94vw;
+        padding:8px;
+    }
+
+    .lightbox-image{
+        max-width:90vw;
+        max-height:66vh;
+    }
+
+    .lightbox-arrow{
+        top:auto;
+        bottom:18px;
+        padding:8px 14px;
+        font-size:42px;
+        transform:none;
+    }
+
+    .lightbox-arrow:hover{
+        transform:scale(1.06);
+    }
+
+    .lightbox-prev{
+        left:18px;
+    }
+
+    .lightbox-next{
+        right:18px;
+    }
+
+    .lightbox-close{
+        top:10px;
+        right:16px;
+        font-size:42px;
+    }
+
+    .lightbox-caption{
+        margin-top:16px;
+        padding-bottom:42px;
+    }
+
 }
+
 </style>
+
 </head>
 
 <body>
 
 <header>
-<a href="index.html"><img src="oglogo.png" alt="The Adore Studio" class="logo"></a>
+
+<a href="index.html">
+    <img
+        src="oglogo.png"
+        alt="The Adore Studio"
+        class="logo">
+</a>
+
 <nav>
-<a href="index.html">Home</a>
-<a href="gallery.html">Gallery</a>
-<a href="books.html">Books</a>
-<a href="#">Prints</a>
-<a href="about.html">About</a>
+    <a href="books.html">Books</a>
+    <a href="prints.html">Prints</a>
+    <a href="about.html">About</a>
 </nav>
+
 </header>
 
 <main>
+
 <div class="gallery-heading">
-<h1>Gallery</h1>
-<p class="gallery-subtitle">A growing photographic archive</p>
-</div>
 
-<div class="gallery">
-<img src="Gallery001.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 001">
-<img src="Gallery039.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 039">
-<img src="Gallery041.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 041">
-<img src="Gallery067.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 067">
-<img src="Gallery070.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 070">
-<img src="Gallery071.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 071">
+    <h1>Gallery</h1>
 
-<img src="Gallery055.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 055">
-<img src="Gallery044.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 044">
-<img src="Gallery043.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 043">
-<img src="Gallery042.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 042">
-<img src="Gallery060.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 060">
-<img src="Gallery078.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 078">
-<img src="Gallery079.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 079">
-
-<img src="Gallery014.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 014">
-<img src="Gallery016.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 016">
-<img src="Gallery008.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 008">
-<img src="Gallery017.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 017">
-<img src="Gallery009.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 009">
-<img src="Gallery010.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 010">
-<img src="Gallery012.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 012">
-<img src="Gallery013.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 013">
-
-<img src="Gallery048.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 048">
-<img src="Gallery049.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 049">
-<img src="Gallery003.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 003">
-<img src="Gallery029.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 029">
-<img src="Gallery063.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 063">
-<img src="Gallery064.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 064">
-<img src="Gallery075.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 075">
-<img src="Gallery081.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 081">
-<img src="Gallery021.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 021">
-
-<img src="Gallery098.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 098">
-<img src="Gallery097.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 097">
-<img src="Gallery108.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 108">
-<img src="Gallery099.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 099">
-<img src="Gallery074.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 074">
-<img src="Gallery073.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 073">
-<img src="Gallery057.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 057">
-
-<img src="Gallery051.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 051">
-<img src="Gallery050.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 050">
-<img src="Gallery059.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 059">
-<img src="Gallery030.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 030">
-<img src="Gallery061.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 061">
-<img src="Gallery058.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 058">
-<img src="Gallery056.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 056">
-<img src="Gallery105.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 105">
-<img src="Gallery106.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 106">
-<img src="Gallery104.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 104">
-
-<img src="Gallery038.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 038">
-<img src="Gallery026.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 026">
-<img src="Gallery033.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 033">
-<img src="Gallery076.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 076">
-<img src="Gallery100.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 100">
-<img src="Gallery101.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 101">
-<img src="Gallery024.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 024">
-<img src="Gallery025.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 025">
-<img src="Gallery019.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 019">
-<img src="Gallery027.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 027">
-<img src="Gallery020.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 020">
-
-<img src="Gallery065.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 065">
-<img src="Gallery066.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 066">
-<img src="Gallery091.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 091">
-<img src="Gallery083.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 083">
-<img src="Gallery015.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 015">
-
-<img src="Gallery002.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 002">
-<img src="Gallery028.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 028">
-<img src="Gallery031.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 031">
-<img src="Gallery032.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 032">
-<img src="Gallery034.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 034">
-<img src="Gallery035.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 035">
-<img src="Gallery036.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 036">
-<img src="Gallery037.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 037">
-
-<img src="Gallery052.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 052">
-<img src="Gallery053.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 053">
-<img src="Gallery054.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 054">
-<img src="Gallery062.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 062">
-<img src="Gallery077.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 077">
-<img src="Gallery080.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 080">
-<img src="Gallery082.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 082">
-
-<img src="Gallery092.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 092">
-<img src="Gallery093.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 093">
-<img src="Gallery094.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 094">
-<img src="Gallery095.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 095">
-<img src="Gallery096.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 096">
-<img src="Gallery102.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 102">
-<img src="Gallery103.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 103">
-<img src="Gallery068.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 068">
-<img src="Gallery069.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 069">
-<img src="Gallery018.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 018">
-
-<img src="Gallery040.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 040">
-
-<img src="Gallery107.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 107">
-<img src="Gallery023.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 023">
-<img src="Gallery007.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 007">
-
-<img src="Gallery004.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 004">
-<img src="Gallery005.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 005">
-<img src="Gallery006.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 006">
-
-<img src="Gallery045.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 045">
-<img src="Gallery046.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 046">
-<img src="Gallery047.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 047">
-
-<img src="Gallery084.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 084">
-<img src="Gallery085.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 085">
-<img src="Gallery086.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 086">
-<img src="Gallery087.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 087">
-
-<img src="Gallery090.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 090">
-<img src="Gallery088.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 088">
-<img src="Gallery089.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 089">
-
-<img src="Gallery011.jpg" alt="Fine art photograph by Theodore Paulson" data-title="Gallery 011">
+    <p class="gallery-subtitle">
+        A growing photographic archive
+    </p>
 
 </div>
+
+<div class="gallery" id="gallery"></div>
+
 </main>
 
-<footer>© 2026 The Adore Studio</footer>
+<footer>
+    © 2026 The Adore Studio
+</footer>
 
 <div class="lightbox" id="lightbox" aria-hidden="true">
-<button class="lightbox-close" id="lightboxClose" aria-label="Close">&times;</button>
-<button class="lightbox-arrow lightbox-prev" id="lightboxPrev" aria-label="Previous image">&#10094;</button>
 
-<div class="lightbox-content">
-<div class="lightbox-frame">
-<img class="lightbox-image" id="lightboxImage" src="" alt="">
-</div>
-<div class="lightbox-caption">
-<div class="lightbox-title" id="lightboxTitle"></div>
-<div class="lightbox-studio">Theodore Paulson</div>
-</div>
+    <button
+        class="lightbox-close"
+        id="lightboxClose"
+        aria-label="Close">
+        &times;
+    </button>
+
+    <button
+        class="lightbox-arrow lightbox-prev"
+        id="lightboxPrev"
+        aria-label="Previous image">
+        &#10094;
+    </button>
+
+    <div class="lightbox-content">
+
+        <div class="lightbox-frame">
+
+            <img
+                class="lightbox-image"
+                id="lightboxImage"
+                src=""
+                alt="">
+
+        </div>
+
+        <div class="lightbox-caption">
+
+            <div
+                class="lightbox-title"
+                id="lightboxTitle">
+            </div>
+
+            <div class="lightbox-studio">
+                Theodore Paulson
+            </div>
+
+        </div>
+
+    </div>
+
+    <button
+        class="lightbox-arrow lightbox-next"
+        id="lightboxNext"
+        aria-label="Next image">
+        &#10095;
+    </button>
+
 </div>
 
-<button class="lightbox-arrow lightbox-next" id="lightboxNext" aria-label="Next image">&#10095;</button>
-</div>
+<script src="gallery.js?v=22"></script>
 
 <script>
-const galleryImages=Array.from(document.querySelectorAll('.gallery img'));
-const lightbox=document.getElementById('lightbox');
-const lightboxImage=document.getElementById('lightboxImage');
-const lightboxTitle=document.getElementById('lightboxTitle');
-const lightboxClose=document.getElementById('lightboxClose');
-const lightboxPrev=document.getElementById('lightboxPrev');
-const lightboxNext=document.getElementById('lightboxNext');
 
-let currentIndex=0;
+const gallery = document.getElementById('gallery');
+const lightbox = document.getElementById('lightbox');
+const lightboxImage = document.getElementById('lightboxImage');
+const lightboxTitle = document.getElementById('lightboxTitle');
+const lightboxClose = document.getElementById('lightboxClose');
+const lightboxPrev = document.getElementById('lightboxPrev');
+const lightboxNext = document.getElementById('lightboxNext');
+
+let currentIndex = 0;
+
+if(typeof galleryOrder === 'undefined'){
+
+    gallery.innerHTML = `
+        <p class="gallery-error">
+            The gallery could not load. Confirm that gallery.js is
+            in the same folder as index.html.
+        </p>
+    `;
+
+}else{
+
+    galleryOrder.forEach((item, index) => {
+
+        const galleryItem = document.createElement('div');
+        const image = document.createElement('img');
+
+        galleryItem.className = 'gallery-item';
+
+        image.src = item.image;
+
+        image.alt =
+            item.title ||
+            'Fine art photograph by Theodore Paulson';
+
+        image.loading =
+            index < 9 ? 'eager' : 'lazy';
+
+        image.addEventListener('load', resizeGalleryItem);
+
+        image.addEventListener(
+            'click',
+            () => openLightbox(index)
+        );
+
+        galleryItem.appendChild(image);
+        gallery.appendChild(galleryItem);
+
+    });
+
+}
+
+function resizeGalleryItem(event){
+
+    const image = event.target;
+    const item = image.closest('.gallery-item');
+
+    if(!item){
+        return;
+    }
+
+    const galleryStyles = window.getComputedStyle(gallery);
+
+    const rowHeight = parseInt(
+        galleryStyles.getPropertyValue('grid-auto-rows')
+    );
+
+    const itemStyles = window.getComputedStyle(item);
+
+    const bottomMargin = parseInt(
+        itemStyles.getPropertyValue('margin-bottom')
+    );
+
+    const itemHeight =
+        image.getBoundingClientRect().height + bottomMargin;
+
+    const rowSpan = Math.ceil(itemHeight / rowHeight);
+
+    item.style.gridRowEnd = `span ${rowSpan}`;
+
+}
+
+function resizeAllGalleryItems(){
+
+    document
+        .querySelectorAll('.gallery-item img')
+        .forEach(image => {
+
+            if(image.complete){
+                resizeGalleryItem({target:image});
+            }
+
+        });
+
+}
+
+window.addEventListener(
+    'load',
+    resizeAllGalleryItems
+);
+
+window.addEventListener(
+    'resize',
+    () => {
+
+        clearTimeout(window.galleryResizeTimer);
+
+        window.galleryResizeTimer = setTimeout(
+            resizeAllGalleryItems,
+            150
+        );
+
+    }
+);
 
 function showImage(index){
-currentIndex=(index+galleryImages.length)%galleryImages.length;
-const selectedImage=galleryImages[currentIndex];
-lightboxImage.src=selectedImage.src;
-lightboxImage.alt=selectedImage.alt;
-lightboxTitle.textContent=selectedImage.dataset.title;
+
+    currentIndex =
+        (index + galleryOrder.length) %
+        galleryOrder.length;
+
+    const selectedImage =
+        galleryOrder[currentIndex];
+
+    lightboxImage.src =
+        selectedImage.image;
+
+    lightboxImage.alt =
+        selectedImage.title ||
+        'Fine art photograph by Theodore Paulson';
+
+    lightboxTitle.textContent =
+        selectedImage.title || '';
+
 }
 
 function openLightbox(index){
-showImage(index);
-lightbox.classList.add('active');
-lightbox.setAttribute('aria-hidden','false');
-document.body.classList.add('lightbox-open');
+
+    showImage(index);
+
+    lightbox.classList.add('active');
+
+    lightbox.setAttribute(
+        'aria-hidden',
+        'false'
+    );
+
+    document.body.classList.add(
+        'lightbox-open'
+    );
+
 }
 
 function closeLightbox(){
-lightbox.classList.remove('active');
-lightbox.setAttribute('aria-hidden','true');
-document.body.classList.remove('lightbox-open');
-lightboxImage.src='';
+
+    lightbox.classList.remove('active');
+
+    lightbox.setAttribute(
+        'aria-hidden',
+        'true'
+    );
+
+    document.body.classList.remove(
+        'lightbox-open'
+    );
+
+    lightboxImage.src = '';
+
 }
 
-galleryImages.forEach((image,index)=>image.addEventListener('click',()=>openLightbox(index)));
+lightboxClose.addEventListener(
+    'click',
+    closeLightbox
+);
 
-lightboxClose.addEventListener('click',closeLightbox);
-lightboxPrev.addEventListener('click',event=>{
-event.stopPropagation();
-showImage(currentIndex-1);
-});
-lightboxNext.addEventListener('click',event=>{
-event.stopPropagation();
-showImage(currentIndex+1);
-});
+lightboxPrev.addEventListener(
+    'click',
+    event => {
 
-lightbox.addEventListener('click',event=>{
-if(event.target===lightbox)closeLightbox();
-});
+        event.stopPropagation();
+        showImage(currentIndex - 1);
 
-document.addEventListener('keydown',event=>{
-if(!lightbox.classList.contains('active'))return;
-if(event.key==='Escape')closeLightbox();
-if(event.key==='ArrowLeft')showImage(currentIndex-1);
-if(event.key==='ArrowRight')showImage(currentIndex+1);
-});
+    }
+);
+
+lightboxNext.addEventListener(
+    'click',
+    event => {
+
+        event.stopPropagation();
+        showImage(currentIndex + 1);
+
+    }
+);
+
+lightbox.addEventListener(
+    'click',
+    event => {
+
+        if(event.target === lightbox){
+            closeLightbox();
+        }
+
+    }
+);
+
+document.addEventListener(
+    'keydown',
+    event => {
+
+        if(
+            !lightbox.classList.contains('active')
+        ){
+            return;
+        }
+
+        if(event.key === 'Escape'){
+            closeLightbox();
+        }
+
+        if(event.key === 'ArrowLeft'){
+            showImage(currentIndex - 1);
+        }
+
+        if(event.key === 'ArrowRight'){
+            showImage(currentIndex + 1);
+        }
+
+    }
+);
+
 </script>
 
 </body>
+
 </html>
