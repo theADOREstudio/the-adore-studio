@@ -84,7 +84,7 @@ h1{
 
 /*
 Masonry grid:
-Images remain in gallery.js order from left to right,
+Images remain in gallery order from left to right,
 then continue onto the next row.
 */
 
@@ -213,7 +213,7 @@ then continue onto the next row.
 
 .lightbox-close{
     top:18px;
-    right:28px;
+    left:28px;
     font-size:46px;
 }
 
@@ -338,7 +338,7 @@ footer{
 
     .lightbox-close{
         top:10px;
-        right:16px;
+        left:16px;
         font-size:42px;
     }
 
@@ -444,242 +444,137 @@ footer{
 
 </div>
 
-<script src="gallery.js?v=22"></script>
-
 <script>
+
+/*
+==========================================================
+GALLERY ORDER
+
+MOVE ANY ONE LINE UP OR DOWN TO MOVE THAT PHOTO.
+
+Example:
+
+    { image: "Gallery090.jpg", title: "Gallery 090", collection: "All" },
+    { image: "Gallery088.jpg", title: "Gallery 088", collection: "All" },
+    { image: "Gallery089.jpg", title: "Gallery 089", collection: "All" },
+
+==========================================================
+*/
+
+const galleryOrder = [
+    { image: "Gallery001.jpg", title: "Gallery 001", collection: "All" },
+    { image: "Gallery002.jpg", title: "Gallery 002", collection: "All" },
+    { image: "Gallery003.jpg", title: "Gallery 003", collection: "All" },
+    { image: "Gallery004.jpg", title: "Gallery 004", collection: "All" },
+    { image: "Gallery005.jpg", title: "Gallery 005", collection: "All" },
+    { image: "Gallery006.jpg", title: "Gallery 006", collection: "All" },
+    { image: "Gallery007.jpg", title: "Gallery 007", collection: "All" },
+    { image: "Gallery008.jpg", title: "Gallery 008", collection: "All" },
+    { image: "Gallery009.jpg", title: "Gallery 009", collection: "All" },
+    { image: "Gallery010.jpg", title: "Gallery 010", collection: "All" },
+    { image: "Gallery011.jpg", title: "Gallery 011", collection: "All" },
+    { image: "Gallery012.jpg", title: "Gallery 012", collection: "All" },
+    { image: "Gallery013.jpg", title: "Gallery 013", collection: "All" },
+    { image: "Gallery014.jpg", title: "Gallery 014", collection: "All" },
+    { image: "Gallery015.jpg", title: "Gallery 015", collection: "All" },
+    { image: "Gallery016.jpg", title: "Gallery 016", collection: "All" },
+    { image: "Gallery017.jpg", title: "Gallery 017", collection: "All" },
+    { image: "Gallery018.jpg", title: "Gallery 018", collection: "All" },
+    { image: "Gallery019.jpg", title: "Gallery 019", collection: "All" },
+    { image: "Gallery020.jpg", title: "Gallery 020", collection: "All" },
+    { image: "Gallery021.jpg", title: "Gallery 021", collection: "All" },
+    { image: "Gallery022.jpg", title: "Gallery 022", collection: "All" },
+    { image: "Gallery023.jpg", title: "Gallery 023", collection: "All" },
+    { image: "Gallery024.jpg", title: "Gallery 024", collection: "All" },
+    { image: "Gallery025.jpg", title: "Gallery 025", collection: "All" },
+    { image: "Gallery026.jpg", title: "Gallery 026", collection: "All" },
+    { image: "Gallery027.jpg", title: "Gallery 027", collection: "All" },
+    { image: "Gallery028.jpg", title: "Gallery 028", collection: "All" },
+    { image: "Gallery029.jpg", title: "Gallery 029", collection: "All" },
+    { image: "Gallery030.jpg", title: "Gallery 030", collection: "All" },
+    { image: "Gallery031.jpg", title: "Gallery 031", collection: "All" },
+    { image: "Gallery032.jpg", title: "Gallery 032", collection: "All" },
+    { image: "Gallery033.jpg", title: "Gallery 033", collection: "All" },
+    { image: "Gallery034.jpg", title: "Gallery 034", collection: "All" },
+    { image: "Gallery035.jpg", title: "Gallery 035", collection: "All" },
+    { image: "Gallery036.jpg", title: "Gallery 036", collection: "All" },
+    { image: "Gallery037.jpg", title: "Gallery 037", collection: "All" },
+    { image: "Gallery038.jpg", title: "Gallery 038", collection: "All" },
+    { image: "Gallery039.jpg", title: "Gallery 039", collection: "All" },
+    { image: "Gallery040.jpg", title: "Gallery 040", collection: "All" },
+    { image: "Gallery041.jpg", title: "Gallery 041", collection: "All" },
+    { image: "Gallery042.jpg", title: "Gallery 042", collection: "All" },
+    { image: "Gallery043.jpg", title: "Gallery 043", collection: "All" },
+    { image: "Gallery044.jpg", title: "Gallery 044", collection: "All" },
+    { image: "Gallery045.jpg", title: "Gallery 045", collection: "All" },
+    { image: "Gallery046.jpg", title: "Gallery 046", collection: "All" },
+    { image: "Gallery047.jpg", title: "Gallery 047", collection: "All" },
+    { image: "Gallery048.jpg", title: "Gallery 048", collection: "All" },
+    { image: "Gallery049.jpg", title: "Gallery 049", collection: "All" },
+    { image: "Gallery050.jpg", title: "Gallery 050", collection: "All" },
+    { image: "Gallery051.jpg", title: "Gallery 051", collection: "All" },
+    { image: "Gallery052.jpg", title: "Gallery 052", collection: "All" },
+    { image: "Gallery053.jpg", title: "Gallery 053", collection: "All" },
+    { image: "Gallery054.jpg", title: "Gallery 054", collection: "All" },
+    { image: "Gallery055.jpg", title: "Gallery 055", collection: "All" },
+    { image: "Gallery056.jpg", title: "Gallery 056", collection: "All" },
+    { image: "Gallery057.jpg", title: "Gallery 057", collection: "All" },
+    { image: "Gallery058.jpg", title: "Gallery 058", collection: "All" },
+    { image: "Gallery059.jpg", title: "Gallery 059", collection: "All" },
+    { image: "Gallery060.jpg", title: "Gallery 060", collection: "All" },
+    { image: "Gallery061.jpg", title: "Gallery 061", collection: "All" },
+    { image: "Gallery062.jpg", title: "Gallery 062", collection: "All" },
+    { image: "Gallery063.jpg", title: "Gallery 063", collection: "All" },
+    { image: "Gallery064.jpg", title: "Gallery 064", collection: "All" },
+    { image: "Gallery065.jpg", title: "Gallery 065", collection: "All" },
+    { image: "Gallery066.jpg", title: "Gallery 066", collection: "All" },
+    { image: "Gallery067.jpg", title: "Gallery 067", collection: "All" },
+    { image: "Gallery068.jpg", title: "Gallery 068", collection: "All" },
+    { image: "Gallery069.jpg", title: "Gallery 069", collection: "All" },
+    { image: "Gallery070.jpg", title: "Gallery 070", collection: "All" },
+    { image: "Gallery071.jpg", title: "Gallery 071", collection: "All" },
+    { image: "Gallery072.jpg", title: "Gallery 072", collection: "All" },
+    { image: "Gallery073.jpg", title: "Gallery 073", collection: "All" },
+    { image: "Gallery074.jpg", title: "Gallery 074", collection: "All" },
+    { image: "Gallery075.jpg", title: "Gallery 075", collection: "All" },
+    { image: "Gallery076.jpg", title: "Gallery 076", collection: "All" },
+    { image: "Gallery077.jpg", title: "Gallery 077", collection: "All" },
+    { image: "Gallery078.jpg", title: "Gallery 078", collection: "All" },
+    { image: "Gallery079.jpg", title: "Gallery 079", collection: "All" },
+    { image: "Gallery080.jpg", title: "Gallery 080", collection: "All" },
+    { image: "Gallery081.jpg", title: "Gallery 081", collection: "All" },
+    { image: "Gallery082.jpg", title: "Gallery 082", collection: "All" },
+    { image: "Gallery083.jpg", title: "Gallery 083", collection: "All" },
+    { image: "Gallery084.jpg", title: "Gallery 084", collection: "All" },
+    { image: "Gallery085.jpg", title: "Gallery 085", collection: "All" },
+    { image: "Gallery086.jpg", title: "Gallery 086", collection: "All" },
+    { image: "Gallery087.jpg", title: "Gallery 087", collection: "All" },
+    { image: "Gallery088.jpg", title: "Gallery 088", collection: "All" },
+    { image: "Gallery089.jpg", title: "Gallery 089", collection: "All" },
+    { image: "Gallery090.jpg", title: "Gallery 090", collection: "All" },
+    { image: "Gallery091.jpg", title: "Gallery 091", collection: "All" },
+    { image: "Gallery092.jpg", title: "Gallery 092", collection: "All" },
+    { image: "Gallery093.jpg", title: "Gallery 093", collection: "All" },
+    { image: "Gallery094.jpg", title: "Gallery 094", collection: "All" },
+    { image: "Gallery095.jpg", title: "Gallery 095", collection: "All" },
+    { image: "Gallery096.jpg", title: "Gallery 096", collection: "All" },
+    { image: "Gallery097.jpg", title: "Gallery 097", collection: "All" },
+    { image: "Gallery098.jpg", title: "Gallery 098", collection: "All" },
+    { image: "Gallery099.jpg", title: "Gallery 099", collection: "All" },
+    { image: "Gallery100.jpg", title: "Gallery 100", collection: "All" },
+    { image: "Gallery101.jpg", title: "Gallery 101", collection: "All" },
+    { image: "Gallery102.jpg", title: "Gallery 102", collection: "All" },
+    { image: "Gallery103.jpg", title: "Gallery 103", collection: "All" },
+    { image: "Gallery104.jpg", title: "Gallery 104", collection: "All" },
+    { image: "Gallery105.jpg", title: "Gallery 105", collection: "All" },
+    { image: "Gallery106.jpg", title: "Gallery 106", collection: "All" },
+    { image: "Gallery107.jpg", title: "Gallery 107", collection: "All" },
+    { image: "Gallery108.jpg", title: "Gallery 108", collection: "All" }
+];
 
 const gallery = document.getElementById('gallery');
 const lightbox = document.getElementById('lightbox');
 const lightboxImage = document.getElementById('lightboxImage');
 const lightboxTitle = document.getElementById('lightboxTitle');
 const lightboxClose = document.getElementById('lightboxClose');
-const lightboxPrev = document.getElementById('lightboxPrev');
-const lightboxNext = document.getElementById('lightboxNext');
-
-let currentIndex = 0;
-
-if(typeof galleryOrder === 'undefined'){
-
-    gallery.innerHTML = `
-        <p class="gallery-error">
-            The gallery could not load. Confirm that gallery.js is
-            in the same folder as index.html.
-        </p>
-    `;
-
-}else{
-
-    galleryOrder.forEach((item, index) => {
-
-        const galleryItem = document.createElement('div');
-        const image = document.createElement('img');
-
-        galleryItem.className = 'gallery-item';
-
-        image.src = item.image;
-
-        image.alt =
-            item.title ||
-            'Fine art photograph by Theodore Paulson';
-
-        image.loading =
-            index < 9 ? 'eager' : 'lazy';
-
-        image.addEventListener('load', resizeGalleryItem);
-
-        image.addEventListener(
-            'click',
-            () => openLightbox(index)
-        );
-
-        galleryItem.appendChild(image);
-        gallery.appendChild(galleryItem);
-
-    });
-
-}
-
-function resizeGalleryItem(event){
-
-    const image = event.target;
-    const item = image.closest('.gallery-item');
-
-    if(!item){
-        return;
-    }
-
-    const galleryStyles = window.getComputedStyle(gallery);
-
-    const rowHeight = parseInt(
-        galleryStyles.getPropertyValue('grid-auto-rows')
-    );
-
-    const itemStyles = window.getComputedStyle(item);
-
-    const bottomMargin = parseInt(
-        itemStyles.getPropertyValue('margin-bottom')
-    );
-
-    const itemHeight =
-        image.getBoundingClientRect().height + bottomMargin;
-
-    const rowSpan = Math.ceil(itemHeight / rowHeight);
-
-    item.style.gridRowEnd = `span ${rowSpan}`;
-
-}
-
-function resizeAllGalleryItems(){
-
-    document
-        .querySelectorAll('.gallery-item img')
-        .forEach(image => {
-
-            if(image.complete){
-                resizeGalleryItem({target:image});
-            }
-
-        });
-
-}
-
-window.addEventListener(
-    'load',
-    resizeAllGalleryItems
-);
-
-window.addEventListener(
-    'resize',
-    () => {
-
-        clearTimeout(window.galleryResizeTimer);
-
-        window.galleryResizeTimer = setTimeout(
-            resizeAllGalleryItems,
-            150
-        );
-
-    }
-);
-
-function showImage(index){
-
-    currentIndex =
-        (index + galleryOrder.length) %
-        galleryOrder.length;
-
-    const selectedImage =
-        galleryOrder[currentIndex];
-
-    lightboxImage.src =
-        selectedImage.image;
-
-    lightboxImage.alt =
-        selectedImage.title ||
-        'Fine art photograph by Theodore Paulson';
-
-    lightboxTitle.textContent =
-        selectedImage.title || '';
-
-}
-
-function openLightbox(index){
-
-    showImage(index);
-
-    lightbox.classList.add('active');
-
-    lightbox.setAttribute(
-        'aria-hidden',
-        'false'
-    );
-
-    document.body.classList.add(
-        'lightbox-open'
-    );
-
-}
-
-function closeLightbox(){
-
-    lightbox.classList.remove('active');
-
-    lightbox.setAttribute(
-        'aria-hidden',
-        'true'
-    );
-
-    document.body.classList.remove(
-        'lightbox-open'
-    );
-
-    lightboxImage.src = '';
-
-}
-
-lightboxClose.addEventListener(
-    'click',
-    closeLightbox
-);
-
-lightboxPrev.addEventListener(
-    'click',
-    event => {
-
-        event.stopPropagation();
-        showImage(currentIndex - 1);
-
-    }
-);
-
-lightboxNext.addEventListener(
-    'click',
-    event => {
-
-        event.stopPropagation();
-        showImage(currentIndex + 1);
-
-    }
-);
-
-lightbox.addEventListener(
-    'click',
-    event => {
-
-        if(event.target === lightbox){
-            closeLightbox();
-        }
-
-    }
-);
-
-document.addEventListener(
-    'keydown',
-    event => {
-
-        if(
-            !lightbox.classList.contains('active')
-        ){
-            return;
-        }
-
-        if(event.key === 'Escape'){
-            closeLightbox();
-        }
-
-        if(event.key === 'ArrowLeft'){
-            showImage(currentIndex - 1);
-        }
-
-        if(event.key === 'ArrowRight'){
-            showImage(currentIndex + 1);
-        }
-
-    }
-);
-
-</script>
-
-</body>
-
-</html>
+const
