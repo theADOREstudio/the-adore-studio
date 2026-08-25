@@ -1,1 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Seaside in Perspective | The Adore Studio</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#ffffff;
+    color:#333;
+    font-family:Georgia, serif;
+}
+
+body.lightbox-open{
+    overflow:hidden;
+}
+
+
+/* HEADER */
+
+header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:30px;
+    padding:22px 50px;
+    border-bottom:1px solid #e6e6e6;
+    background:#ffffff;
+}
+
+.logo{
+    display:block;
+    width:230px;
+    height:auto;
+}
+
+nav{
+    display:flex;
+    gap:32px;
+}
+
+nav a{
+    color:#666;
+    text-decoration:none;
+    font-size:16px;
+    letter-spacing:1px;
+    transition:color .2s ease;
+}
+
+nav a:hover{
+    color:#1d5f97;
+}
+
+
+/* BOOK INTRO */
+
+.book-intro{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:70px 30px 35px;
+    text-align:center;
+}
+
+.book-intro h1{
+    font-size:58px;
+    font-weight:normal;
+    letter-spacing:2px;
+    margin-bottom:18px;
+}
+
+.book-intro .author{
+    color:#777;
+    font-size:17px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    margin-bottom:42px;
+}
+
+.book-intro .description{
+    max-width:650px;
+    color:#666;
+    font-size:20px;
+    line-height:1.8;
+}
+
+
+/* BOOK */
+
+.book{
+    max-width:1500px;
+    margin:0 auto;
+    padding:0 40px 110px;
+}
+
+.book-page{
+    min-height:90vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:70px 0;
+}
+
+.book-page img{
+    display:block;
+    max-width:100%;
+    max-height:82vh;
+    width:auto;
+    height:auto;
+    cursor:pointer;
+    box-shadow:0 4px 18px rgba(0,0,0,.08);
+    transition:transform .25s ease, box-shadow .25s ease;
+}
+
+.book-page img:hover{
+    transform:translateY(-3px);
+    box-shadow:0 12px 30px rgba(0,0,0,.13);
+}
+
+
+/* FOUR-IMAGE SERIES */
+
+.series-page{
+    min-height:90vh;
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0,1fr));
+    gap:18px;
+    align-content:center;
+    padding:70px 0;
+}
+
+.series-page img{
+    display:block;
+    width:100%;
+    height:auto;
+    cursor:pointer;
+    box-shadow:0 4px 18px rgba(0,0,0,.08);
+    transition:transform .25s ease, box-shadow .25s ease;
+}
+
+.series-page img:hover{
+    transform:translateY(-3px);
+    box-shadow:0 12px 30px rgba(0,0,0,.13);
+}
+
+
+/* LIGHTBOX */
+
+.lightbox{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    padding:34px 90px;
+    background:#f7f7f4;
+    align-items:center;
+    justify-content:center;
+}
+
+.lightbox.active{
+    display:flex;
+}
+
+.lightbox-content{
+    width:100%;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+}
+
+.lightbox-frame{
+    display:flex;
+    max-width:92vw;
+    max-height:78vh;
+    padding:18px;
+    background:#ffffff;
+    box-shadow:0 18px 48px rgba(0,0,0,.16);
+    align-items:center;
+    justify-content:center;
+}
+
+.lightbox-image{
+    display:block;
+    width:auto;
+    height:auto;
+    max-width:86vw;
+    max-height:72vh;
+    object-fit:contain;
+}
+
+.lightbox-caption{
+    margin-top:22px;
+    color:#555;
+    text-align:center;
+}
+
+.lightbox-title{
+    margin-bottom:5px;
+    font-size:20px;
+}
+
+.lightbox-studio{
+    color:#888;
+    font-size:15px;
+    letter-spacing:1.6px;
+    text-transform:uppercase;
+}
+
+.lightbox-close,
+.lightbox-arrow{
+    position:absolute;
+    border:0;
+    background:transparent;
+    color:#444;
+    font-family:Arial, sans-serif;
+    cursor:pointer;
+    line-height:1;
+    opacity:.78;
+}
+
+.lightbox-close{
+    top:18px;
+    left:28px;
+    font-size:46px;
+}
+
+.lightbox-arrow{
+    top:50%;
+    padding:18px;
+    font-size:56px;
+    transform:translateY(-50%);
+}
+
+.lightbox-prev{
+    left:12px;
+}
+
+.lightbox-next{
+    right:12px;
+}
+
+
+/* END */
+
+.book-end{
+    min-height:55vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:80px 30px;
+    text-align:center;
+}
+
+.book-end p{
+    color:#777;
+    font-size:18px;
+    letter-spacing:1px;
+    margin-bottom:28px;
+}
+
+.book-end a{
+    color:#555;
+    text-decoration:none;
+    border-bottom:1px solid #aaa;
+    padding-bottom:4px;
+}
+
+.book-end a:hover{
+    color:#1d5f97;
+    border-color:#1d5f97;
+}
+
+
+/* FOOTER */
+
+footer{
+    padding:38px 20px;
+    border-top:1px solid #e6e6e6;
+    color:#999;
+    text-align:center;
+}
+
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+    header{
+        flex-direction:column;
+        padding:22px;
+    }
+
+    nav{
+        justify-content:center;
+        flex-wrap:wrap;
+        gap:20px;
+    }
+
+    .book-intro{
+        padding:55px 25px 25px;
+    }
+
+    .book-intro h1{
+        font-size:44px;
+    }
+
+    .book{
+        padding-left:20px;
+        padding-right:20px;
+    }
+
+    .book-page{
+        min-height:auto;
+        padding:45px 0;
+    }
+
+    .series-page{
+        min-height:auto;
+        padding:45px 0;
+    }
+
+}
+
+
+@media(max-width:600px){
+
+    .logo{
+        width:220px;
+    }
+
+    .book-intro{
+        padding:45px 22px 20px;
+    }
+
+    .book-intro h1{
+        font-size:38px;
+    }
+
+    .book-intro .description{
+        font-size:18px;
+    }
+
+    .book-page{
+        padding:32px 0;
+    }
+
+    .series-page{
+        grid-template-columns:1fr;
+        gap:14px;
+        padding:32px 0;
+    }
+
+    .lightbox{
+        padding:58px 12px 24px;
+    }
+
+    .lightbox-image{
+        max-width:90vw;
+        max-height:66vh;
+    }
+
+    .lightbox-arrow{
+        top:auto;
+        bottom:18px;
+        font-size:42px;
+        transform:none;
+    }
+
+    .lightbox-close{
+        top:10px;
+        left:16px;
+        font-size:42px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<a href="index.html">
+    <img src="oglogo.png"
+         alt="The Adore Studio"
+         class="logo">
+</a>
+
+<nav>
+    <a href="index.html">Gallery</a>
+    <a href="books.html">Books</a>
+    <a href="prints.html">Prints</a>
+    <a href="about.html">About</a>
+</nav>
+
+</header>
+
+
+
+<section class="book-intro">
+
+<h1>Seaside in Perspective</h1>
+
+<p class="author">
+Theodore Paulson
+</p>
+
+<p class="description">
+A photographic study of abstraction, scale, movement, and unexpected ways of seeing Oregon's North Coast.
+</p>
+
+</section>
+
+
+
+<main class="book" id="book"></main>
+
+
+
+<section class="book-end">
+
+<p>Seaside in Perspective</p>
+
+<a href="books.html">Return to Collections</a>
+
+</section>
+
+
+
+<footer>
+© 2026 The Adore Studio
+</footer>
+
+
+
+<!-- LIGHTBOX -->
+
+<div class="lightbox" id="lightbox" aria-hidden="true">
+
+<button class="lightbox-close"
+        id="lightboxClose"
+        aria-label="Close">
+&times;
+</button>
+
+<button class="lightbox-arrow lightbox-prev"
+        id="lightboxPrev"
+        aria-label="Previous">
+&#10094;
+</button>
+
+<div class="lightbox-content">
+
+<div class="lightbox-frame">
+
+<img class="lightbox-image"
+     id="lightboxImage"
+     src=""
+     alt="">
+
+</div>
+
+<div class="lightbox-caption">
+
+<div class="lightbox-title"
+     id="lightboxTitle"></div>
+
+<div class="lightbox-studio"
+     id="lightboxAuthor"></div>
+
+</div>
+
+</div>
+
+<button class="lightbox-arrow lightbox-next"
+        id="lightboxNext"
+        aria-label="Next">
+&#10095;
+</button>
+
+</div>
+
+
+
+<script>
+
+/*
+==========================================================
+SEASIDE IN PERSPECTIVE — BOOK ORDER
+
+MOVE AN ENTIRE LINE UP OR DOWN TO CHANGE THE ORDER.
+
+TRIPTYCH FILES ARE ONE BOOK WORK EACH.
+
+084–087 IS KEPT AS ONE FOUR-IMAGE SERIES.
+==========================================================
+*/
+
+const perspectiveBook = [
+
+/* OPENING — ALTERED VIEW / ABSTRACTION */
+
+{type:"image",image:"Gallery003.jpg",title:"Gallery 003"},
+
+{
+    type:"image",
+    image:"Triptych-004-005-006_16x9.jpg",
+    title:"Gallery 004 / 005 / 006"
+},
+
+{
+    type:"image",
+    image:"Triptych_107-023-007_16x9.jpg",
+    title:"Gallery 107 / 023 / 007"
+},
+
+{type:"image",image:"Gallery009.jpg",title:"Gallery 009"},
+{type:"image",image:"Gallery010.jpg",title:"Gallery 010"},
+{type:"image",image:"Gallery013.jpg",title:"Gallery 013"},
+
+{type:"image",image:"Gallery019.jpg",title:"Gallery 019"},
+{type:"image",image:"Gallery020.jpg",title:"Gallery 020"},
+
+{type:"image",image:"Gallery026.jpg",title:"Gallery 026"},
+{type:"image",image:"Gallery027.jpg",title:"Gallery 027"},
+{type:"image",image:"Gallery029.jpg",title:"Gallery 029"},
+{type:"image",image:"Gallery033.jpg",title:"Gallery 033"},
+
+
+/* FORM BECOMES ABSTRACTION */
+
+{type:"image",image:"Gallery042.jpg",title:"Gallery 042"},
+{type:"image",image:"Gallery043.jpg",title:"Gallery 043"},
+{type:"image",image:"Gallery044.jpg",title:"Gallery 044"},
+
+{
+    type:"image",
+    image:"Triptych-045-046-047_16x9.jpg",
+    title:"Gallery 045 / 046 / 047"
+},
+
+{type:"image",image:"Gallery048.jpg",title:"Gallery 048"},
+{type:"image",image:"Gallery049.jpg",title:"Gallery 049"},
+
+{type:"image",image:"Gallery055.jpg",title:"Gallery 055"},
+{type:"image",image:"Gallery057.jpg",title:"Gallery 057"},
+{type:"image",image:"Gallery060.jpg",title:"Gallery 060"},
+
+{type:"image",image:"Gallery063.jpg",title:"Gallery 063"},
+{type:"image",image:"Gallery064.jpg",title:"Gallery 064"},
+
+
+/* SCALE / DISTANCE / SPACE */
+
+{type:"image",image:"Gallery071.jpg",title:"Gallery 071"},
+{type:"image",image:"Gallery073.jpg",title:"Gallery 073"},
+{type:"image",image:"Gallery074.jpg",title:"Gallery 074"},
+{type:"image",image:"Gallery075.jpg",title:"Gallery 075"},
+
+{type:"image",image:"Gallery078.jpg",title:"Gallery 078"},
+{type:"image",image:"Gallery079.jpg",title:"Gallery 079"},
+{type:"image",image:"Gallery083.jpg",title:"Gallery 083"},
+
+
+/* FOUR-IMAGE SERIES — 084 / 085 / 086 / 087 */
+
+{
+    type:"series",
+    images:[
+        {image:"Gallery084.jpg",title:"Gallery 084"},
+        {image:"Gallery085.jpg",title:"Gallery 085"},
+        {image:"Gallery086.jpg",title:"Gallery 086"},
+        {image:"Gallery087.jpg",title:"Gallery 087"}
+    ]
+},
+
+
+/* TRIPTYCH — FIXED ORDER 090 / 088 / 089 */
+
+{
+    type:"image",
+    image:"Triptych-090-088-089_16x9.jpg",
+    title:"Gallery 090 / 088 / 089"
+},
+
+
+/* LATER BOOK */
+
+{type:"image",image:"Gallery091.jpg",title:"Gallery 091"},
+{type:"image",image:"Gallery100.jpg",title:"Gallery 100"},
+{type:"image",image:"Gallery102.jpg",title:"Gallery 102"},
+{type:"image",image:"Gallery104.jpg",title:"Gallery 104"},
+{type:"image",image:"Gallery108.jpg",title:"Gallery 108"}
+
+];
+
+
+/*
+==========================================================
+DO NOT EDIT BELOW HERE JUST TO REORDER THE BOOK
+==========================================================
+*/
+
+const AUTHOR = "Theodore Paulson";
+
+const book = document.getElementById("book");
+
+const lightbox = document.getElementById("lightbox");
+const lightboxImage = document.getElementById("lightboxImage");
+const lightboxTitle = document.getElementById("lightboxTitle");
+const lightboxAuthor = document.getElementById("lightboxAuthor");
+
+
+/*
+Creates one flat list of every image that can be opened
+in the lightbox.
+
+Triptych composites remain one image.
+Series images remain individually clickable.
+*/
+
+const lightboxItems = [];
+
+perspectiveBook.forEach(item=>{
+
+    if(item.type === "image"){
+
+        lightboxItems.push({
+            image:item.image,
+            title:item.title
+        });
+
+    }
+
+    if(item.type === "series"){
+
+        item.images.forEach(seriesImage=>{
+
+            lightboxItems.push({
+                image:seriesImage.image,
+                title:seriesImage.title
+            });
+
+        });
+
+    }
+
+});
+
+
+let currentIndex = 0;
+
+
+/* BUILD BOOK */
+
+perspectiveBook.forEach((item)=>{
+
+
+    /* STANDARD IMAGE / TRIPTYCH */
+
+    if(item.type === "image"){
+
+        const page = document.createElement("section");
+
+        page.className = "book-page";
+
+
+        const image = document.createElement("img");
+
+        image.src = item.image;
+
+        image.alt = item.title;
+
+        image.loading = "lazy";
+
+
+        image.addEventListener("click",()=>{
+
+            const index =
+                lightboxItems.findIndex(
+                    entry => entry.image === item.image
+                );
+
+            openLightbox(index);
+
+        });
+
+
+        page.appendChild(image);
+
+        book.appendChild(page);
+
+    }
+
+
+    /* FOUR-IMAGE SERIES */
+
+    if(item.type === "series"){
+
+        const page = document.createElement("section");
+
+        page.className = "series-page";
+
+
+        item.images.forEach(seriesImage=>{
+
+            const image = document.createElement("img");
+
+            image.src = seriesImage.image;
+
+            image.alt = seriesImage.title;
+
+            image.loading = "lazy";
+
+
+            image.addEventListener("click",()=>{
+
+                const index =
+                    lightboxItems.findIndex(
+                        entry =>
+                        entry.image === seriesImage.image
+                    );
+
+                openLightbox(index);
+
+            });
+
+
+            page.appendChild(image);
+
+        });
+
+
+        book.appendChild(page);
+
+    }
+
+});
+
+
+
+/* LIGHTBOX */
+
+function showImage(index){
+
+    currentIndex =
+        (index + lightboxItems.length)
+        % lightboxItems.length;
+
+
+    const item =
+        lightboxItems[currentIndex];
+
+
+    lightboxImage.src =
+        item.image;
+
+    lightboxImage.alt =
+        item.title;
+
+    lightboxTitle.textContent =
+        item.title;
+
+    lightboxAuthor.textContent =
+        AUTHOR;
+
+}
+
+
+
+function openLightbox(index){
+
+    showImage(index);
+
+    lightbox.classList.add("active");
+
+    lightbox.setAttribute(
+        "aria-hidden",
+        "false"
+    );
+
+    document.body.classList.add(
+        "lightbox-open"
+    );
+
+}
+
+
+
+function closeLightbox(){
+
+    lightbox.classList.remove(
+        "active"
+    );
+
+    lightbox.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+    document.body.classList.remove(
+        "lightbox-open"
+    );
+
+    lightboxImage.src = "";
+
+}
+
+
+
+document.getElementById(
+    "lightboxClose"
+).onclick = closeLightbox;
+
+
+
+document.getElementById(
+    "lightboxPrev"
+).onclick = (e)=>{
+
+    e.stopPropagation();
+
+    showImage(
+        currentIndex - 1
+    );
+
+};
+
+
+
+document.getElementById(
+    "lightboxNext"
+).onclick = (e)=>{
+
+    e.stopPropagation();
+
+    showImage(
+        currentIndex + 1
+    );
+
+};
+
+
+
+lightbox.onclick = (e)=>{
+
+    if(e.target === lightbox){
+
+        closeLightbox();
+
+    }
+
+};
+
+
+
+document.addEventListener(
+    "keydown",
+    (e)=>{
+
+        if(
+            !lightbox.classList.contains(
+                "active"
+            )
+        ){
+            return;
+        }
+
+
+        if(e.key === "Escape"){
+
+            closeLightbox();
+
+        }
+
+
+        if(e.key === "ArrowLeft"){
+
+            showImage(
+                currentIndex - 1
+            );
+
+        }
+
+
+        if(e.key === "ArrowRight"){
+
+            showImage(
+                currentIndex + 1
+            );
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
