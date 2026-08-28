@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -278,7 +279,7 @@ footer{
 <header>
 
 <a href="index.html" aria-label="The Adore Studio Home">
-    <img src="oglogo.png" alt="The Adore Studio" class="logo">
+    <img src="images/branding/oglogo.png" alt="The Adore Studio" class="logo">
 </a>
 
 <nav aria-label="Main Navigation">
@@ -449,7 +450,7 @@ const wrapper=document.createElement("div");
 wrapper.className="gallery-item";
 
 const image=document.createElement("img");
-image.src=item.image;
+image.src="images/gallery/" + item.image;
 image.alt=item.title;
 image.loading=index<9?"eager":"lazy";
 
@@ -466,7 +467,7 @@ currentIndex=(index+galleryOrder.length)%galleryOrder.length;
 
 const item=galleryOrder[currentIndex];
 
-lightboxImage.src=item.image;
+lightboxImage.src="images/gallery/" + item.image;
 lightboxImage.alt=item.title;
 lightboxTitle.textContent=item.title;
 lightboxAuthor.textContent=item.author;
@@ -521,3 +522,4 @@ if(e.key==="ArrowRight") showImage(currentIndex+1);
 
 </body>
 </html>
+```
