@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -399,7 +400,7 @@ footer{
 <header>
 
 <a href="index.html" aria-label="The Adore Studio Home">
-    <img src="oglogo.png"
+    <img src="images/branding/oglogo.png"
          alt="The Adore Studio"
          class="logo">
 </a>
@@ -683,7 +684,7 @@ perspectiveBook.forEach((item)=>{
 
         const image = document.createElement("img");
 
-        image.src = item.image;
+        image.src = "images/gallery/" + item.image;
 
         image.alt = item.title;
 
@@ -722,7 +723,7 @@ perspectiveBook.forEach((item)=>{
 
             const image = document.createElement("img");
 
-            image.src = seriesImage.image;
+            image.src = "images/gallery/" + seriesImage.image;
 
             image.alt = seriesImage.title;
 
@@ -769,7 +770,7 @@ function showImage(index){
 
 
     lightboxImage.src =
-        item.image;
+        "images/gallery/" + item.image;
 
     lightboxImage.alt =
         item.title;
@@ -914,3 +915,4 @@ document.addEventListener(
 
 </body>
 </html>
+```
