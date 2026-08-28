@@ -304,12 +304,12 @@
 
 
   <script>
-    /* =========================================================
-       MASTER HOMEPAGE IMAGE ORDER
 
-       This is your current gallery order.
-       Move any line to change slideshow order.
-       Delete any line to remove it from the homepage slideshow.
+    /* =========================================================
+       MASTER HOMEPAGE IMAGE LIST
+
+       This list stays intact.
+       The slideshow creates a randomized COPY of this list.
        ========================================================= */
 
     const galleryImages = [
@@ -415,6 +415,30 @@
 
 
     /* =========================================================
+       RANDOMIZE HOMEPAGE SLIDESHOW
+
+       Creates a copy of the master list and shuffles it.
+       The master list above is NEVER rearranged.
+       ========================================================= */
+
+    const slideshowImages = [...galleryImages];
+
+    function shuffleImages(images) {
+
+      for (let i = images.length - 1; i > 0; i--) {
+
+        const j = Math.floor(Math.random() * (i + 1));
+
+        [images[i], images[j]] = [images[j], images[i]];
+
+      }
+
+    }
+
+    shuffleImages(slideshowImages);
+
+
+    /* =========================================================
        SLIDESHOW ENGINE
        ========================================================= */
 
@@ -432,7 +456,7 @@
 
     /* Create slides */
 
-    galleryImages.forEach((item, index) => {
+    slideshowImages.forEach((item, index) => {
 
       const slide = document.createElement("div");
       slide.className = "slide";
@@ -533,12 +557,12 @@
     function preloadNext() {
 
       const nextIndex =
-        currentIndex + 1 >= galleryImages.length
+        currentIndex + 1 >= slideshowImages.length
           ? 0
           : currentIndex + 1;
 
       const img = new Image();
-      img.src = galleryImages[nextIndex].image;
+      img.src = slideshowImages[nextIndex].image;
 
     }
 
