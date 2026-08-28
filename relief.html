@@ -359,7 +359,7 @@ footer{
 <header>
 
 <a href="index.html" aria-label="The Adore Studio Home">
-    <img src="oglogo.png"
+    <img src="images/branding/oglogo.png"
          alt="The Adore Studio"
          class="logo">
 </a>
@@ -532,7 +532,7 @@ reliefBook.forEach((item,index)=>{
 
     const image = document.createElement("img");
 
-    image.src = item.image;
+    image.src = "images/gallery/" + item.image;
     image.alt = item.title;
 
     image.loading = index < 3 ? "eager" : "lazy";
@@ -556,7 +556,7 @@ function showImage(index){
 
     const item = reliefBook[currentIndex];
 
-    lightboxImage.src = item.image;
+    lightboxImage.src = "images/gallery/" + item.image;
     lightboxImage.alt = item.title;
 
     lightboxTitle.textContent = item.title;
