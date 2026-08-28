@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -255,7 +256,7 @@
   <header class="site-header">
 
     <a class="logo-link" href="index.html" aria-label="The Adore Studio Home">
-      <img src="oglogo.png" alt="The Adore Studio" />
+      <img src="images/branding/oglogo.png" alt="The Adore Studio" />
     </a>
 
     <nav class="main-nav" aria-label="Main Navigation">
@@ -466,7 +467,7 @@
 
       const img = document.createElement("img");
 
-      img.src = item.image;
+      img.src = "images/gallery/" + item.image;
       img.alt = item.title || "The Adore Studio photograph";
 
       if (index > 1) {
@@ -561,7 +562,7 @@
           : currentIndex + 1;
 
       const img = new Image();
-      img.src = slideshowImages[nextIndex].image;
+      img.src = "images/gallery/" + slideshowImages[nextIndex].image;
 
     }
 
@@ -643,3 +644,4 @@
 
 </body>
 </html>
+```
