@@ -1,1 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <title>The Adore Studio | Theodore Paulson</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      font-family: Georgia, "Times New Roman", serif;
+      background: #000;
+      color: #333;
+      overflow: hidden;
+    }
+
+    /* =========================================================
+       HEADER
+       ========================================================= */
+
+    .site-header {
+      height: 196px;
+      width: 100%;
+      background: #fff;
+      border-bottom: 1px solid #dedede;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding: 0 52px;
+      position: relative;
+      z-index: 100;
+    }
+
+    .logo-link {
+      display: block;
+      width: 230px;
+      flex-shrink: 0;
+    }
+
+    .logo-link img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .main-nav {
+      display: flex;
+      align-items: center;
+      gap: 34px;
+      padding-right: 4px;
+    }
+
+    .main-nav a {
+      color: #5b3e2e;
+      text-decoration: none;
+      font-size: 17px;
+      letter-spacing: 0.02em;
+      transition: opacity 0.25s ease;
+    }
+
+    .main-nav a:hover {
+      opacity: 0.55;
+    }
+
+    /* =========================================================
+       SLIDESHOW
+       ========================================================= */
+
+    .slideshow {
+      position: relative;
+      width: 100%;
+      height: calc(100vh - 196px);
+      background: #000;
+      overflow: hidden;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      opacity: 0;
+      transition: opacity 1.6s ease;
+      pointer-events: none;
+    }
+
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+      z-index: 2;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      display: block;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    /* =========================================================
+       CONTROLS
+       ========================================================= */
+
+    .slideshow-control {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+
+      width: 54px;
+      height: 86px;
+
+      border: none;
+      background: rgba(0, 0, 0, 0.08);
+      color: rgba(255, 255, 255, 0.72);
+
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 44px;
+      font-weight: 300;
+
+      cursor: pointer;
+      z-index: 20;
+
+      opacity: 0;
+      transition:
+        opacity 0.25s ease,
+        background 0.25s ease;
+    }
+
+    .slideshow:hover .slideshow-control,
+    .slideshow:hover .pause-button {
+      opacity: 1;
+    }
+
+    .slideshow-control:hover {
+      background: rgba(0, 0, 0, 0.28);
+      color: #fff;
+    }
+
+    .previous {
+      left: 0;
+    }
+
+    .next {
+      right: 0;
+    }
+
+    .pause-button {
+      position: absolute;
+      right: 20px;
+      bottom: 18px;
+
+      width: 42px;
+      height: 42px;
+
+      border: 1px solid rgba(255,255,255,0.45);
+      border-radius: 50%;
+
+      background: rgba(0,0,0,0.18);
+      color: rgba(255,255,255,0.85);
+
+      font-size: 15px;
+      cursor: pointer;
+
+      z-index: 20;
+      opacity: 0;
+
+      transition:
+        opacity 0.25s ease,
+        background 0.25s ease;
+    }
+
+    .pause-button:hover {
+      background: rgba(0,0,0,0.45);
+      color: #fff;
+    }
+
+    /* =========================================================
+       MOBILE
+       ========================================================= */
+
+    @media (max-width: 800px) {
+      body {
+        overflow: auto;
+      }
+
+      .site-header {
+        height: auto;
+        min-height: 140px;
+        padding: 20px 24px;
+
+        flex-direction: column;
+        justify-content: center;
+        gap: 18px;
+      }
+
+      .logo-link {
+        width: 190px;
+      }
+
+      .main-nav {
+        padding-right: 0;
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .main-nav a {
+        font-size: 15px;
+      }
+
+      .slideshow {
+        height: calc(100vh - 140px);
+        min-height: 500px;
+      }
+
+      .slideshow-control {
+        opacity: 0.65;
+        width: 44px;
+        height: 70px;
+        font-size: 34px;
+      }
+
+      .pause-button {
+        opacity: 0.65;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =======================================================
+       HEADER
+       ======================================================= -->
+
+  <header class="site-header">
+
+    <a class="logo-link" href="index.html" aria-label="The Adore Studio Home">
+      <img src="Clear Logo.png" alt="The Adore Studio" />
+    </a>
+
+    <nav class="main-nav" aria-label="Main Navigation">
+      <a href="gallery.html">Gallery</a>
+      <a href="collections.html">Collections</a>
+      <a href="prints.html">Prints</a>
+      <a href="about.html">About</a>
+    </nav>
+
+  </header>
+
+
+  <!-- =======================================================
+       HOMEPAGE SLIDESHOW
+       ======================================================= -->
+
+  <main class="slideshow" id="slideshow">
+
+    <button
+      class="slideshow-control previous"
+      id="previousButton"
+      aria-label="Previous photograph"
+    >
+      ‹
+    </button>
+
+    <button
+      class="slideshow-control next"
+      id="nextButton"
+      aria-label="Next photograph"
+    >
+      ›
+    </button>
+
+    <button
+      class="pause-button"
+      id="pauseButton"
+      aria-label="Pause slideshow"
+      title="Pause slideshow"
+    >
+      Ⅱ
+    </button>
+
+  </main>
+
+
+  <script>
+    /* =========================================================
+       MASTER HOMEPAGE IMAGE ORDER
+
+       This is your current gallery order.
+       Move any line to change slideshow order.
+       Delete any line to remove it from the homepage slideshow.
+       ========================================================= */
+
+    const galleryImages = [
+
+      {image:"Gallery001.jpg",title:"Gallery 001",author:"Theodore Paulson"},
+      {image:"Gallery039.jpg",title:"Gallery 039",author:"Theodore Paulson"},
+      {image:"Gallery041.jpg",title:"Gallery 041",author:"Theodore Paulson"},
+      {image:"Gallery067.jpg",title:"Gallery 067",author:"Theodore Paulson"},
+      {image:"Gallery070.jpg",title:"Gallery 070",author:"Theodore Paulson"},
+      {image:"Gallery071.jpg",title:"Gallery 071",author:"Theodore Paulson"},
+      {image:"Gallery055.jpg",title:"Gallery 055",author:"Theodore Paulson"},
+      {image:"Gallery044.jpg",title:"Gallery 044",author:"Theodore Paulson"},
+      {image:"Gallery043.jpg",title:"Gallery 043",author:"Theodore Paulson"},
+      {image:"Gallery042.jpg",title:"Gallery 042",author:"Theodore Paulson"},
+      {image:"Gallery060.jpg",title:"Gallery 060",author:"Theodore Paulson"},
+      {image:"Gallery078.jpg",title:"Gallery 078",author:"Theodore Paulson"},
+      {image:"Gallery079.jpg",title:"Gallery 079",author:"Theodore Paulson"},
+      {image:"Gallery014.jpg",title:"Gallery 014",author:"Theodore Paulson"},
+      {image:"Gallery016.jpg",title:"Gallery 016",author:"Theodore Paulson"},
+      {image:"Gallery008.jpg",title:"Gallery 008",author:"Theodore Paulson"},
+      {image:"Gallery017.jpg",title:"Gallery 017",author:"Theodore Paulson"},
+      {image:"Gallery009.jpg",title:"Gallery 009",author:"Theodore Paulson"},
+      {image:"Gallery010.jpg",title:"Gallery 010",author:"Theodore Paulson"},
+      {image:"Gallery012.jpg",title:"Gallery 012",author:"Theodore Paulson"},
+      {image:"Gallery013.jpg",title:"Gallery 013",author:"Theodore Paulson"},
+      {image:"Gallery048.jpg",title:"Gallery 048",author:"Theodore Paulson"},
+      {image:"Gallery049.jpg",title:"Gallery 049",author:"Theodore Paulson"},
+      {image:"Gallery003.jpg",title:"Gallery 003",author:"Theodore Paulson"},
+      {image:"Gallery029.jpg",title:"Gallery 029",author:"Theodore Paulson"},
+      {image:"Gallery063.jpg",title:"Gallery 063",author:"Theodore Paulson"},
+      {image:"Gallery064.jpg",title:"Gallery 064",author:"Theodore Paulson"},
+      {image:"Gallery075.jpg",title:"Gallery 075",author:"Theodore Paulson"},
+      {image:"Gallery081.jpg",title:"Gallery 081",author:"Theodore Paulson"},
+      {image:"Gallery021.jpg",title:"Gallery 021",author:"Theodore Paulson"},
+      {image:"Gallery098.jpg",title:"Gallery 098",author:"Theodore Paulson"},
+      {image:"Gallery097.jpg",title:"Gallery 097",author:"Theodore Paulson"},
+      {image:"Gallery108.jpg",title:"Gallery 108",author:"Theodore Paulson"},
+      {image:"Gallery099.jpg",title:"Gallery 099",author:"Theodore Paulson"},
+      {image:"Gallery074.jpg",title:"Gallery 074",author:"Theodore Paulson"},
+      {image:"Gallery073.jpg",title:"Gallery 073",author:"Theodore Paulson"},
+      {image:"Gallery057.jpg",title:"Gallery 057",author:"Theodore Paulson"},
+      {image:"Gallery051.jpg",title:"Gallery 051",author:"Theodore Paulson"},
+      {image:"Gallery050.jpg",title:"Gallery 050",author:"Theodore Paulson"},
+      {image:"Gallery059.jpg",title:"Gallery 059",author:"Theodore Paulson"},
+      {image:"Gallery030.jpg",title:"Gallery 030",author:"Theodore Paulson"},
+      {image:"Gallery061.jpg",title:"Gallery 061",author:"Theodore Paulson"},
+      {image:"Gallery058.jpg",title:"Gallery 058",author:"Theodore Paulson"},
+      {image:"Gallery056.jpg",title:"Gallery 056",author:"Theodore Paulson"},
+      {image:"Gallery105.jpg",title:"Gallery 105",author:"Theodore Paulson"},
+      {image:"Gallery106.jpg",title:"Gallery 106",author:"Theodore Paulson"},
+      {image:"Gallery104.jpg",title:"Gallery 104",author:"Theodore Paulson"},
+      {image:"Gallery038.jpg",title:"Gallery 038",author:"Theodore Paulson"},
+      {image:"Gallery026.jpg",title:"Gallery 026",author:"Theodore Paulson"},
+      {image:"Gallery033.jpg",title:"Gallery 033",author:"Theodore Paulson"},
+      {image:"Gallery076.jpg",title:"Gallery 076",author:"Theodore Paulson"},
+      {image:"Gallery100.jpg",title:"Gallery 100",author:"Theodore Paulson"},
+      {image:"Gallery101.jpg",title:"Gallery 101",author:"Theodore Paulson"},
+      {image:"Gallery024.jpg",title:"Gallery 024",author:"Theodore Paulson"},
+      {image:"Gallery025.jpg",title:"Gallery 025",author:"Theodore Paulson"},
+      {image:"Gallery019.jpg",title:"Gallery 019",author:"Theodore Paulson"},
+      {image:"Gallery027.jpg",title:"Gallery 027",author:"Theodore Paulson"},
+      {image:"Gallery020.jpg",title:"Gallery 020",author:"Theodore Paulson"},
+      {image:"Gallery065.jpg",title:"Gallery 065",author:"Theodore Paulson"},
+      {image:"Gallery066.jpg",title:"Gallery 066",author:"Theodore Paulson"},
+      {image:"Gallery091.jpg",title:"Gallery 091",author:"Theodore Paulson"},
+      {image:"Gallery083.jpg",title:"Gallery 083",author:"Theodore Paulson"},
+      {image:"Gallery015.jpg",title:"Gallery 015",author:"Theodore Paulson"},
+      {image:"Gallery002.jpg",title:"Gallery 002",author:"Theodore Paulson"},
+      {image:"Gallery028.jpg",title:"Gallery 028",author:"Theodore Paulson"},
+      {image:"Gallery031.jpg",title:"Gallery 031",author:"Theodore Paulson"},
+      {image:"Gallery032.jpg",title:"Gallery 032",author:"Theodore Paulson"},
+      {image:"Gallery053.jpg",title:"Gallery 053",author:"Theodore Paulson"},
+      {image:"Gallery034.jpg",title:"Gallery 034",author:"Theodore Paulson"},
+      {image:"Gallery035.jpg",title:"Gallery 035",author:"Theodore Paulson"},
+      {image:"Gallery036.jpg",title:"Gallery 036",author:"Theodore Paulson"},
+      {image:"Gallery037.jpg",title:"Gallery 037",author:"Theodore Paulson"},
+      {image:"Gallery052.jpg",title:"Gallery 052",author:"Theodore Paulson"},
+      {image:"Gallery054.jpg",title:"Gallery 054",author:"Theodore Paulson"},
+      {image:"Gallery062.jpg",title:"Gallery 062",author:"Theodore Paulson"},
+      {image:"Gallery077.jpg",title:"Gallery 077",author:"Theodore Paulson"},
+      {image:"Gallery080.jpg",title:"Gallery 080",author:"Theodore Paulson"},
+      {image:"Gallery082.jpg",title:"Gallery 082",author:"Theodore Paulson"},
+      {image:"Gallery092.jpg",title:"Gallery 092",author:"Theodore Paulson"},
+      {image:"Gallery093.jpg",title:"Gallery 093",author:"Theodore Paulson"},
+      {image:"Gallery094.jpg",title:"Gallery 094",author:"Theodore Paulson"},
+      {image:"Gallery095.jpg",title:"Gallery 095",author:"Theodore Paulson"},
+      {image:"Gallery096.jpg",title:"Gallery 096",author:"Theodore Paulson"},
+      {image:"Gallery102.jpg",title:"Gallery 102",author:"Theodore Paulson"},
+      {image:"Gallery103.jpg",title:"Gallery 103",author:"Theodore Paulson"},
+      {image:"Gallery068.jpg",title:"Gallery 068",author:"Theodore Paulson"},
+      {image:"Gallery069.jpg",title:"Gallery 069",author:"Theodore Paulson"},
+      {image:"Gallery018.jpg",title:"Gallery 018",author:"Theodore Paulson"},
+      {image:"Gallery040.jpg",title:"Gallery 040",author:"Theodore Paulson"},
+
+      {image:"Triptych_107-023-007_16x9.jpg",title:"Gallery 107 / 023 / 007",author:"Theodore Paulson"},
+      {image:"Triptych_004-005-006_16x9.jpg",title:"Gallery 004 / 005 / 006",author:"Theodore Paulson"},
+      {image:"Triptych_045-046-047_16x9.jpg",title:"Gallery 045 / 046 / 047",author:"Theodore Paulson"},
+      {image:"Triptych_090-088-089_16x9.jpg",title:"Gallery 090 / 088 / 089",author:"Theodore Paulson"},
+
+      {image:"Gallery011.jpg",title:"Gallery 011",author:"Theodore Paulson"}
+
+    ];
+
+
+    /* =========================================================
+       SLIDESHOW ENGINE
+       ========================================================= */
+
+    const slideshow = document.getElementById("slideshow");
+    const previousButton = document.getElementById("previousButton");
+    const nextButton = document.getElementById("nextButton");
+    const pauseButton = document.getElementById("pauseButton");
+
+    let currentIndex = 0;
+    let isPlaying = true;
+    let timer = null;
+
+    const slideDuration = 6500;
+
+
+    /* Create slides */
+
+    galleryImages.forEach((item, index) => {
+
+      const slide = document.createElement("div");
+      slide.className = "slide";
+
+      if (index === 0) {
+        slide.classList.add("active");
+      }
+
+      const img = document.createElement("img");
+
+      img.src = item.image;
+      img.alt = item.title || "The Adore Studio photograph";
+
+      if (index > 1) {
+        img.loading = "lazy";
+      }
+
+      img.decoding = "async";
+
+      slide.appendChild(img);
+
+      slideshow.insertBefore(slide, previousButton);
+
+    });
+
+
+    const slides = document.querySelectorAll(".slide");
+
+
+    /* =========================================================
+       SHOW SLIDE
+       ========================================================= */
+
+    function showSlide(index) {
+
+      slides[currentIndex].classList.remove("active");
+
+      currentIndex = index;
+
+      if (currentIndex < 0) {
+        currentIndex = slides.length - 1;
+      }
+
+      if (currentIndex >= slides.length) {
+        currentIndex = 0;
+      }
+
+      slides[currentIndex].classList.add("active");
+
+      preloadNext();
+
+    }
+
+
+    /* =========================================================
+       NEXT / PREVIOUS
+       ========================================================= */
+
+    function nextSlide() {
+      showSlide(currentIndex + 1);
+    }
+
+    function previousSlide() {
+      showSlide(currentIndex - 1);
+    }
+
+
+    /* =========================================================
+       TIMER
+       ========================================================= */
+
+    function startTimer() {
+
+      clearInterval(timer);
+
+      if (!isPlaying) return;
+
+      timer = setInterval(() => {
+        nextSlide();
+      }, slideDuration);
+
+    }
+
+
+    function restartTimer() {
+
+      if (isPlaying) {
+        startTimer();
+      }
+
+    }
+
+
+    /* =========================================================
+       PRELOAD NEXT IMAGE
+       ========================================================= */
+
+    function preloadNext() {
+
+      const nextIndex =
+        currentIndex + 1 >= galleryImages.length
+          ? 0
+          : currentIndex + 1;
+
+      const img = new Image();
+      img.src = galleryImages[nextIndex].image;
+
+    }
+
+
+    /* =========================================================
+       BUTTONS
+       ========================================================= */
+
+    nextButton.addEventListener("click", () => {
+      nextSlide();
+      restartTimer();
+    });
+
+    previousButton.addEventListener("click", () => {
+      previousSlide();
+      restartTimer();
+    });
+
+
+    pauseButton.addEventListener("click", () => {
+
+      isPlaying = !isPlaying;
+
+      if (isPlaying) {
+
+        pauseButton.textContent = "Ⅱ";
+        pauseButton.setAttribute("aria-label", "Pause slideshow");
+        pauseButton.title = "Pause slideshow";
+
+        startTimer();
+
+      } else {
+
+        pauseButton.textContent = "▶";
+        pauseButton.setAttribute("aria-label", "Play slideshow");
+        pauseButton.title = "Play slideshow";
+
+        clearInterval(timer);
+
+      }
+
+    });
+
+
+    /* =========================================================
+       KEYBOARD CONTROLS
+       ========================================================= */
+
+    document.addEventListener("keydown", (event) => {
+
+      if (event.key === "ArrowRight") {
+        nextSlide();
+        restartTimer();
+      }
+
+      if (event.key === "ArrowLeft") {
+        previousSlide();
+        restartTimer();
+      }
+
+      if (event.key === " ") {
+
+        event.preventDefault();
+        pauseButton.click();
+
+      }
+
+    });
+
+
+    /* =========================================================
+       START
+       ========================================================= */
+
+    preloadNext();
+    startTimer();
+
+  </script>
+
+</body>
+</html>
