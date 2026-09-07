@@ -129,6 +129,32 @@ nav a:hover{
 }
 
 
+/* FOUR-IMAGE SERIES */
+
+.series-page{
+    min-height:90vh;
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0,1fr));
+    gap:18px;
+    align-content:center;
+    padding:70px 0;
+}
+
+.series-page img{
+    display:block;
+    width:100%;
+    height:auto;
+    cursor:pointer;
+    box-shadow:0 4px 18px rgba(0,0,0,.08);
+    transition:transform .25s ease, box-shadow .25s ease;
+}
+
+.series-page img:hover{
+    transform:translateY(-3px);
+    box-shadow:0 12px 30px rgba(0,0,0,.13);
+}
+
+
 /* LIGHTBOX */
 
 .lightbox{
@@ -302,6 +328,11 @@ footer{
         padding:45px 0;
     }
 
+    .series-page{
+        min-height:auto;
+        padding:45px 0;
+    }
+
 }
 
 
@@ -324,6 +355,12 @@ footer{
     }
 
     .book-page{
+        padding:32px 0;
+    }
+
+    .series-page{
+        grid-template-columns:1fr;
+        gap:14px;
         padding:32px 0;
     }
 
@@ -480,9 +517,9 @@ const perspectiveBook = [
 /* OPENING — ALTERED VIEW / ABSTRACTION */
 
 {type:"image",image:"Gallery026.jpg",title:"Gallery 026"},
-{type:"image",image:"Gallery027.jpg",title:"Gallery 027"},
 {type:"image",image:"Gallery029.jpg",title:"Gallery 029"},
 {type:"image",image:"Gallery033.jpg",title:"Gallery 033"},
+{type:"image",image:"Gallery027.jpg",title:"Gallery 027"},
 {type:"image",image:"Gallery003.jpg",title:"Gallery 003"},
 
 {
@@ -492,14 +529,13 @@ const perspectiveBook = [
 },
 
 {type:"image",image:"Gallery009.jpg",title:"Gallery 009"},
-{type:"image",image:"Gallery010.jpg",title:"Gallery 010"},
 {type:"image",image:"Gallery013.jpg",title:"Gallery 013"},
-
+{type:"image",image:"Gallery010.jpg",title:"Gallery 010"},
 {type:"image",image:"Gallery019.jpg",title:"Gallery 019"},
 {type:"image",image:"Gallery020.jpg",title:"Gallery 020"},
 
 
-/* FORM BECOMES ABSTRACTION */
+/* FORM / ABSTRACTION */
 
 {type:"image",image:"Gallery042.jpg",title:"Gallery 042"},
 {type:"image",image:"Gallery043.jpg",title:"Gallery 043"},
@@ -513,29 +549,32 @@ const perspectiveBook = [
 
 {type:"image",image:"Gallery048.jpg",title:"Gallery 048"},
 {type:"image",image:"Gallery049.jpg",title:"Gallery 049"},
-
 {type:"image",image:"Gallery055.jpg",title:"Gallery 055"},
-
 {type:"image",image:"Gallery063.jpg",title:"Gallery 063"},
 {type:"image",image:"Gallery064.jpg",title:"Gallery 064"},
 
 
 /* SCALE / DISTANCE / SPACE */
 
+{type:"image",image:"Gallery068.jpg",title:"Gallery 068"},
 {type:"image",image:"Gallery071.jpg",title:"Gallery 071"},
 {type:"image",image:"Gallery074.jpg",title:"Gallery 074"},
 {type:"image",image:"Gallery075.jpg",title:"Gallery 075"},
 {type:"image",image:"Gallery081.jpg",title:"Gallery 081"},
 {type:"image",image:"Gallery082.jpg",title:"Gallery 082"},
-{type:"image",image:"Gallery096.jpg",title:"Gallery 096"},
-{type:"image",image:"Gallery068.jpg",title:"Gallery 068"},
 {type:"image",image:"Gallery083.jpg",title:"Gallery 083"},
+
+
+/* MOVEMENT / TRANSITION */
+
 {type:"image",image:"Gallery078.jpg",title:"Gallery 078"},
 {type:"image",image:"Gallery060.jpg",title:"Gallery 060"},
 {type:"image",image:"Gallery057.jpg",title:"Gallery 057"},
+{type:"image",image:"Gallery096.jpg",title:"Gallery 096"},
+{type:"image",image:"Gallery091.jpg",title:"Gallery 091"},
 
 
-/* TRIPTYCH — FIXED ORDER 090 / 088 / 089 */
+/* CLOSING */
 
 {
     type:"image",
@@ -543,10 +582,6 @@ const perspectiveBook = [
     title:"Gallery 090 / 088 / 089"
 },
 
-
-/* LATER BOOK */
-
-{type:"image",image:"Gallery091.jpg",title:"Gallery 091"},
 {type:"image",image:"Gallery102.jpg",title:"Gallery 102"},
 
 ];
@@ -573,6 +608,7 @@ Creates one flat list of every image that can be opened
 in the lightbox.
 
 Triptych composites remain one image.
+Series images remain individually clickable.
 */
 
 const lightboxItems = [];
@@ -584,6 +620,19 @@ perspectiveBook.forEach(item=>{
         lightboxItems.push({
             image:item.image,
             title:item.title
+        });
+
+    }
+
+    if(item.type === "series"){
+
+        item.images.forEach(seriesImage=>{
+
+            lightboxItems.push({
+                image:seriesImage.image,
+                title:seriesImage.title
+            });
+
         });
 
     }
@@ -630,6 +679,49 @@ perspectiveBook.forEach((item)=>{
 
 
         page.appendChild(image);
+
+        book.appendChild(page);
+
+    }
+
+
+    /* FOUR-IMAGE SERIES */
+
+    if(item.type === "series"){
+
+        const page = document.createElement("section");
+
+        page.className = "series-page";
+
+
+        item.images.forEach(seriesImage=>{
+
+            const image = document.createElement("img");
+
+            image.src = "images/gallery/" + seriesImage.image;
+
+            image.alt = seriesImage.title;
+
+            image.loading = "lazy";
+
+
+            image.addEventListener("click",()=>{
+
+                const index =
+                    lightboxItems.findIndex(
+                        entry =>
+                        entry.image === seriesImage.image
+                    );
+
+                openLightbox(index);
+
+            });
+
+
+            page.appendChild(image);
+
+        });
+
 
         book.appendChild(page);
 
